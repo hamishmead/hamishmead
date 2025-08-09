@@ -165,7 +165,88 @@
             <h2>Latest Updates</h2>
             <p>Welcome to the updates page! Here’s where I’ll post any new info, events, or announcements.</p>
 	    <div style="height:20px;"></div> <!-- Adds vertical space -->
-            
+			<!DOCTYPE html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .embed {
+    flex: 1 1 45%;
+    min-width: 300px;
+  }
+  iframe {
+    width: 100%;
+    height: 480px;
+    border: none;
+  }
+</style>
+</head>
+
+<div class="container">
+<style>
+.carousel {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  max-width: 800px;
+  height: 400px;
+  margin: auto;
+}
+
+.carousel-track {
+  display: flex;
+  width: 100%;
+  animation: slide 12s infinite;
+}
+
+.carousel-slide {
+  min-width: 100%;
+  height: 400px;
+}
+
+.carousel-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Animation for auto sliding */
+@keyframes slide {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(0); }
+  33% { transform: translateX(-100%); }
+  58% { transform: translateX(-100%); }
+  66% { transform: translateX(-200%); }
+  91% { transform: translateX(-200%); }
+  100% { transform: translateX(0); }
+}
+</style>
+
+<div class="carousel">
+  <div class="carousel-track">
+    <div class="carousel-slide">
+      <img src="https://picsum.photos/800/400?random=1" alt="Slide 1">
+    </div>
+    <div class="carousel-slide">
+      <img src="https://picsum.photos/800/400?random=2" alt="Slide 2">
+    </div>
+    <div class="carousel-slide">
+      <img src="https://picsum.photos/800/400?random=3" alt="Slide 3">
+    </div>
+  </div>
+</div>
+
+
+  <!-- Google Calendar -->
+  <div class="embed">
+   <iframe src="https://calendar.google.com/calendar/embed?src=06e6cfc494c9617882c935bdfaf7e432f0eed67b0cb71704dec5e3d5c2b39631%40group.calendar.google.com&ctz=Australia%2FBrisbane" style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+  </div>
+</div>            
             <div class="update-card">
                 <h3>Meet the Candidates forum</h3>
                 <p>Come meet the candidates at the Cairns City Libary on August 29th! Bring all your questions ready!</p>
@@ -191,6 +272,7 @@
 
 </body>
 </html>
+
 
 
 
