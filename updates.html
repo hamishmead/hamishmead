@@ -458,7 +458,6 @@ nav {
    <iframe src="https://calendar.google.com/calendar/embed?src=06e6cfc494c9617882c935bdfaf7e432f0eed67b0cb71704dec5e3d5c2b39631%40group.calendar.google.com&ctz=Australia%2FBrisbane" style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
   </div>
 </div>      
-	<!-- Campaign Tracker -->
 <!-- Campaign Tracker -->
 <section class="campaign-tracker">
   <h2>Campaign Tracker</h2>
@@ -474,7 +473,7 @@ nav {
     <div class="event" data-date="2025-08-18" data-tooltip="Campaign has officially started">
       <span class="dot"></span><p>18 August</p>
     </div>
-    <div class="event" data-date="2025-08-29" data-tooltip="Meet the candidates at the City Library. Arrive from 5pm and leave at 7:30">
+    <div class="event" data-date="2025-08-29" data-tooltip="Meet the candidates at the City Library">
       <span class="dot"></span><p>29 Aug</p>
     </div>
     <div class="event" data-date="2025-09-07" data-tooltip="Final campaign day before voting">
@@ -578,9 +577,8 @@ nav {
   white-space: nowrap;
 }
 
-/* Tooltip Styles */
-.event[data-tooltip]::after {
-  content: attr(data-tooltip);
+/* Real tooltip element (used on mobile) */
+.tooltip {
   position: absolute;
   background: #111827;
   color: #fff;
@@ -593,20 +591,36 @@ nav {
   transition: opacity .2s ease;
   z-index: 10;
 }
+.tooltip.visible {
+  opacity: 1;
+}
 
-/* Desktop: tooltip below dot on hover */
+/* Desktop: keep hover tooltip below the dot using ::after */
 @media (min-width: 641px) {
+  .tooltip { display: none; }
   .event[data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute;
     bottom: -2.4rem;
     left: 50%;
     transform: translateX(-50%);
+    background: #111827;
+    color: #fff;
+    padding: 6px 8px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .2s ease;
+    z-index: 10;
   }
   .event:hover::after {
     opacity: 1;
   }
 }
 
-/* Mobile layout and tooltip beside date on tap */
+/* Mobile layout */
 @media (max-width: 640px) {
   .timeline {
     flex-direction: column;
@@ -638,14 +652,6 @@ nav {
     margin: 0;
     font-size: 0.9rem;
   }
-  .event[data-tooltip]::after {
-    top: 50%;
-    left: calc(100% + 10px);
-    transform: translateY(-50%);
-  }
-  .event.show-tooltip::after {
-    opacity: 1;
-  }
 }
 </style>
 
@@ -655,17 +661,19 @@ document.addEventListener('DOMContentLoaded', () => {
   const line = document.querySelector('.timeline-line');
   const mm = window.matchMedia('(max-width: 640px)');
 
-  // Mark completed and current
-  const today = new Date(); today.setHours(0,0,0,0);
-  let latestPast = null;
+  // Build real tooltip elements for mobile
   events.forEach(ev => {
-    const d = new Date(ev.getAttribute('data-date'));
-    d.setHours(0,0,0,0);
-    if (d <= today) { ev.classList.add('completed'); latestPast = ev; }
+    const existing = ev.querySelector('.tooltip');
+    if (!existing) {
+      const tip = document.createElement('span');
+      tip.className = 'tooltip';
+      tip.textContent = ev.getAttribute('data-tooltip') || '';
+      ev.appendChild(tip);
+    }
   });
-  if (latestPast) latestPast.classList.add('current');
 
-  // Progress gradient across milestones
+  // Mark completed/current and compute gradient
+  const today = new Date(); today.setHours(0,0,0,0);
   const dates = events.map(ev => {
     const d = new Date(ev.getAttribute('data-date'));
     d.setHours(0,0,0,0);
@@ -673,52 +681,116 @@ document.addEventListener('DOMContentLoaded', () => {
   }).filter(d => !isNaN(d));
 
   let progressPercent = 0;
-  const total = dates.length - 1;
-  for (let i = 0; i < total; i++) {
-    const start = dates[i], end = dates[i+1];
-    if (today >= start && today < end) {
-      const span = end - start, elapsed = today - start;
-      progressPercent = ((i + (elapsed / span)) / total) * 100;
-      break;
+  let latestPast = null;
+
+  events.forEach((ev, i) => {
+    const d = dates[i];
+    if (d && d <= today) { ev.classList.add('completed'); latestPast = ev; }
+    if (d && i < dates.length - 1) {
+      const next = dates[i+1];
+      if (today >= d && today < next) {
+        const span = next - d, elapsed = today - d;
+        progressPercent = ((i + (elapsed / span)) / (dates.length - 1)) * 100;
+      }
     }
+  });
+  if (latestPast) latestPast.classList.add('current');
+  if (dates.length) {
+    if (today >= dates[dates.length - 1]) progressPercent = 100;
+    if (today < dates[0]) progressPercent = 0;
   }
-  if (today >= dates[dates.length - 1]) progressPercent = 100;
-  if (today < dates[0]) progressPercent = 0;
 
   function applyGradient() {
     const dir = mm.matches ? 'to bottom' : 'to right';
     line.style.background = `linear-gradient(${dir}, #22c55e 0%, #22c55e ${progressPercent}%, #ccc ${progressPercent}%, #ccc 100%)`;
   }
-
   applyGradient();
   window.addEventListener('resize', applyGradient);
-
-  // Mobile tooltip toggle on tap
-  function clearTooltips(except) {
-    events.forEach(ev => { if (ev !== except) ev.classList.remove('show-tooltip'); });
+  if (typeof mm.addEventListener === 'function') {
+    mm.addEventListener('change', applyGradient);
+  } else if (typeof mm.addListener === 'function') {
+    mm.addListener(applyGradient);
   }
+
+  // Mobile tooltip: position beside the date text on tap
+  function clearTooltips(except) {
+    events.forEach(ev => {
+      const tip = ev.querySelector('.tooltip');
+      if (!tip) return;
+      if (ev !== except) tip.classList.remove('visible');
+    });
+  }
+
+  function positionTooltip(ev) {
+    const tip = ev.querySelector('.tooltip');
+    const p = ev.querySelector('p');
+    if (!tip || !p) return;
+
+    // Base measurement
+    const evRect = ev.getBoundingClientRect();
+    const pRect = p.getBoundingClientRect();
+
+    // Default position: right of the date text
+    const gap = 10;
+    let left = (pRect.left - evRect.left) + pRect.width + gap;
+    let top = (pRect.top - evRect.top) + (pRect.height / 2);
+
+    // Measure tooltip width; flip to left if it would overflow container
+    // Ensure it's measurable
+    const prevOpacity = tip.style.opacity;
+    const prevVis = tip.style.visibility;
+    tip.style.visibility = 'hidden';
+    tip.style.opacity = '1';
+    const tipWidth = tip.offsetWidth;
+    tip.style.opacity = prevOpacity || '';
+    tip.style.visibility = prevVis || '';
+
+    const evWidth = ev.clientWidth;
+    if (left + tipWidth > evWidth) {
+      left = Math.max(0, (pRect.left - evRect.left) - gap - tipWidth);
+    }
+
+    tip.style.left = `${left}px`;
+    tip.style.top = `${top}px`;
+    tip.style.transform = 'translateY(-50%)';
+  }
+
+  // Click handling (mobile only)
   events.forEach(ev => {
     ev.addEventListener('click', (e) => {
       if (!mm.matches) return; // only on mobile
       e.stopPropagation();
-      const show = !ev.classList.contains('show-tooltip');
+      const tip = ev.querySelector('.tooltip');
+      if (!tip) return;
+
+      const willShow = !tip.classList.contains('visible');
       clearTooltips(ev);
-      if (show) ev.classList.add('show-tooltip'); else ev.classList.remove('show-tooltip');
+      if (willShow) {
+        positionTooltip(ev);
+        tip.classList.add('visible');
+      } else {
+        tip.classList.remove('visible');
+      }
     });
   });
-  document.addEventListener('click', () => {
-    if (mm.matches) clearTooltips();
-  });
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') clearTooltips();
-  });
 
-  // Handle media query changes (mobile <-> desktop)
-  const mqChange = () => { clearTooltips(); applyGradient(); };
+  // Dismiss on outside tap or Esc
+  document.addEventListener('click', () => { if (mm.matches) clearTooltips(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') clearTooltips(); });
+
+  // Reposition visible tooltips on resize/orientation change
+  function refreshVisible() {
+    if (!mm.matches) { clearTooltips(); return; }
+    events.forEach(ev => {
+      const tip = ev.querySelector('.tooltip');
+      if (tip && tip.classList.contains('visible')) positionTooltip(ev);
+    });
+  }
+  window.addEventListener('resize', refreshVisible);
   if (typeof mm.addEventListener === 'function') {
-    mm.addEventListener('change', mqChange);
+    mm.addEventListener('change', refreshVisible);
   } else if (typeof mm.addListener === 'function') {
-    mm.addListener(mqChange);
+    mm.addListener(refreshVisible);
   }
 });
 </script>
