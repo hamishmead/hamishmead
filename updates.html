@@ -158,6 +158,206 @@
     <nav>
 	    <a target="_self" href="index.html" >Home</a>
     </nav>
+
+<script>
+(() => {
+  const STORAGE_KEY = "theme";
+  const root = document.documentElement;
+
+  // Scoped fallback styles: do NOT set body text color; only main content
+  (function injectScopedStyles() {
+    if (document.getElementById("__theme_scoped_styles")) return;
+    const style = document.createElement("style");
+    style.id = "__theme_scoped_styles";
+    style.textContent = `
+      :root[data-theme="light"] {
+        color-scheme: light;
+        --bg: #ffffff;
+        --text: #0f172a;
+        --muted: #64748b;
+        --card: #ffffff;
+        --border: #e5e7eb;
+        --link: #2563eb;
+      }
+      :root[data-theme="dark"] {
+        color-scheme: dark;
+        --bg: #0b0f17;
+        --text: #e5e7eb;
+        --muted: #9aa3b2;
+        --card: #101624;
+        --border: #1f2937;
+        --link: #93c5fd;
+      }
+
+      /* Background only; do NOT set body color to avoid affecting header/footer text */
+      body {
+        background: var(--bg);
+        transition: background-color 180ms ease;
+        margin: 0;
+      }
+
+      /* Text and link colors limited to main content areas */
+      main, section, article, aside {
+        color: var(--text);
+        background: transparent;
+      }
+      main a, section a, article a, aside a { color: var(--link); }
+      main h1, main h2, main h3, main h4, main h5, main h6,
+      section h1, section h2, section h3, section h4, section h5, section h6,
+      article h1, article h2, article h3, article h4, article h5, article h6,
+      aside h1, aside h2, aside h3, aside h4, aside h5, aside h6 {
+        color: var(--text);
+      }
+
+      /* Forms: scoped to content only */
+      main input, main textarea, main select,
+      section input, section textarea, section select,
+      article input, article textarea, article select,
+      aside input, aside textarea, aside select {
+        background: var(--card);
+        color: var(--text);
+        border: 1px solid var(--border);
+      }
+      main input::placeholder, main textarea::placeholder,
+      section input::placeholder, section textarea::placeholder,
+      article input::placeholder, article textarea::placeholder,
+      aside input::placeholder, aside textarea::placeholder { color: var(--muted); }
+    `;
+    (document.head || document.documentElement).appendChild(style);
+  })();
+
+  // Decide initial theme: saved > existing state > system
+  function detectInitialTheme() {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved === "dark" || saved === "light") return saved;
+    } catch {}
+    const ds = (root.dataset.theme || "").toLowerCase();
+    if (ds === "dark" || ds === "light") return ds;
+    if (root.classList.contains("dark") || root.classList.contains("dark-mode")) return "dark";
+    return (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) ? "dark" : "light";
+  }
+
+  // Apply theme: only set data-theme (do NOT add/remove classes to avoid touching your header/footer styles)
+  function applyTheme(theme) {
+    root.dataset.theme = theme;
+    root.style.colorScheme = theme;
+    try { localStorage.setItem(STORAGE_KEY, theme); } catch {}
+    updateButton(theme);
+  }
+
+  function getCurrentTheme() {
+    return root.dataset.theme === "dark" ? "dark" : "light";
+  }
+  const opposite = t => (t === "dark" ? "light" : "dark");
+
+  // Button (Shadow DOM) — same look, emoji + text, 50% bg
+  function mountButton() {
+    const mountWhenReady = () => {
+      if (!document.body) return void requestAnimationFrame(mountWhenReady);
+
+      let host = document.getElementById("__theme_toggle_host");
+      if (!host) {
+        host = document.createElement("div");
+        host.id = "__theme_toggle_host";
+        host.style.position = "fixed";
+        host.style.right = "18px";
+        host.style.bottom = "18px";
+        host.style.zIndex = "2147483647";
+        host.style.pointerEvents = "auto";
+        document.body.appendChild(host);
+      }
+
+      const shadow = host.shadowRoot || host.attachShadow({ mode: "open" });
+      if (!shadow.getElementById("style")) {
+        const style = document.createElement("style");
+        style.id = "style";
+        style.textContent = `
+          :host { all: initial; }
+          button {
+            all: unset;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 14px;
+            border-radius: 9999px;
+            border: 1px solid rgba(0,0,0,0.25);
+            background-color: rgba(0,0,0,0.5); /* 50% in light */
+            color: #ffffff;
+            font: 600 14px/1 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+            letter-spacing: 0.25px;
+            cursor: pointer;
+            white-space: nowrap;
+            -webkit-backdrop-filter: blur(6px) saturate(140%);
+            backdrop-filter: blur(6px) saturate(140%);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.18);
+            transition: transform 160ms ease, box-shadow 180ms ease, background-color 180ms ease, color 180ms ease, border-color 180ms ease;
+          }
+          button:hover { transform: translateY(-2px); box-shadow: 0 8px 18px rgba(0,0,0,0.25); }
+          button:active { transform: translateY(0); }
+          button:focus-visible {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(59,130,246,0.35), 0 6px 14px rgba(0,0,0,0.22);
+          }
+          .emoji { font-size: 14px; line-height: 1; }
+          .label { font-size: 14px; line-height: 1; }
+        `;
+        shadow.appendChild(style);
+      }
+
+      let btn = shadow.getElementById("themeToggle");
+      if (!btn) {
+        btn = document.createElement("button");
+        btn.id = "themeToggle";
+        btn.addEventListener("click", () => applyTheme(opposite(getCurrentTheme())));
+        shadow.appendChild(btn);
+      }
+
+      updateButton(getCurrentTheme(), btn);
+    };
+    mountWhenReady();
+  }
+
+  // Keep button label and colors in sync with current theme
+  function updateButton(currentThemeVal, buttonEl) {
+    let btn = buttonEl;
+    if (!btn) {
+      const host = document.getElementById("__theme_toggle_host");
+      if (!host || !host.shadowRoot) return;
+      btn = host.shadowRoot.getElementById("themeToggle");
+      if (!btn) return;
+    }
+    const next = opposite(currentThemeVal);
+    const emoji = next === "dark" ? "🌙" : "☀️";
+
+    if (currentThemeVal === "dark") {
+      btn.style.backgroundColor = "rgba(255,255,255,0.5)";  // 50% light bg in dark
+      btn.style.borderColor = "rgba(255,255,255,0.3)";
+      btn.style.color = "#111827";
+    } else {
+      btn.style.backgroundColor = "rgba(0,0,0,0.5)";        // 50% dark bg in light
+      btn.style.borderColor = "rgba(0,0,0,0.25)";
+      btn.style.color = "#ffffff";
+    }
+    btn.setAttribute("aria-label", `Switch to ${next} mode`);
+    btn.innerHTML = `<span class="emoji" aria-hidden="true">${emoji}</span><span class="label">${next[0].toUpperCase()}${next.slice(1)}</span>`;
+  }
+
+  // Init
+  const initial = detectInitialTheme();
+  applyTheme(initial);
+  mountButton();
+
+  // Follow OS changes only if user hasn't chosen yet
+  try {
+    if (localStorage.getItem(STORAGE_KEY) == null && window.matchMedia) {
+      const mql = window.matchMedia("(prefers-color-scheme: dark)");
+      mql.addEventListener("change", e => applyTheme(e.matches ? "dark" : "light"));
+    }
+  } catch {}
+})();
+</script>
+
 	
     <!-- Main content -->
     <main>
@@ -259,7 +459,7 @@
     <div class="event" data-date="2025-07-28" data-tooltip="Candidate list has been internally published">
       <span class="dot"></span><p>28 July</p>
     </div>
-    <div class="event" data-date="2025-08-18" data-tooltip="Campaign has officaly started">
+    <div class="event" data-date="2025-08-18" data-tooltip="Campaign has officially started">
       <span class="dot"></span><p>18 August</p>
     </div>
     <div class="event" data-date="2025-08-29" data-tooltip="Meet the candidates at the City Library">
@@ -271,7 +471,7 @@
     <div class="event" data-date="2025-09-08" data-tooltip="Voting week! Vote #1 for Hamish Mead!">
       <span class="dot"></span><p>8–12 Sep</p>
     </div>
-    <div class="event" data-date="2025-10-01" data-tooltip="New representives begin agenda-setting sessions">
+    <div class="event" data-date="2025-10-01" data-tooltip="New representatives begin agenda-setting sessions">
       <span class="dot"></span><p>Oct–Apr</p>
     </div>
     <div class="event" data-date="2026-02-01" data-tooltip="Term officially begins">
@@ -279,6 +479,7 @@
     </div>
   </div>
 </section>
+
 <style>
 .campaign-tracker {
   padding: 2rem 1rem;
@@ -299,8 +500,9 @@
   left: 0;
   height: 4px;
   width: 100%;
-  background: #ccc;
+  background: linear-gradient(to right, #22c55e 0%, #22c55e var(--progress), #ccc var(--progress), #ccc 100%);
   z-index: 0;
+  transition: background 1.2s ease-in-out;
 }
 .event {
   position: relative;
@@ -318,6 +520,8 @@
   border-radius: 50%;
   margin-bottom: 6px;
   transition: background 0.3s ease, border-color 0.3s ease;
+  position: relative;
+  top: -2px;
 }
 .completed .dot {
   background: #22c55e;
@@ -326,20 +530,22 @@
 .current .dot {
   background: #22c55e;
   border-color: #22c55e;
-  animation: pulse 1.6s ease-out infinite;
+  animation: pop-in 0.6s ease-out 1.2s forwards, pulse 1.6s ease-out 1.8s infinite;
 }
 @keyframes pulse {
   0%   { box-shadow: 0 0 0 0 rgba(34,197,94,0.5); }
   70%  { box-shadow: 0 0 0 10px rgba(34,197,94,0); }
   100% { box-shadow: 0 0 0 0 rgba(34,197,94,0); }
 }
+@keyframes pop-in {
+  0%   { transform: scale(0.5); opacity: 0; }
+  60%  { transform: scale(1.2); opacity: 1; }
+  100% { transform: scale(1); }
+}
 .event p {
   font-size: 0.8rem;
   margin: 0;
   white-space: nowrap;
-}
-.event[title] {
-  position: relative;
 }
 .event[data-tooltip]::after {
   content: attr(data-tooltip);
@@ -373,6 +579,7 @@
     left: 32px;
     width: 4px;
     height: 100%;
+    background: linear-gradient(to bottom, #22c55e 0%, #22c55e var(--progress), #ccc var(--progress), #ccc 100%);
   }
   .event {
     flex-direction: row;
@@ -382,6 +589,7 @@
   }
   .dot {
     margin: 0 12px 0 0;
+    top: 0;
   }
   .event p {
     white-space: normal;
@@ -393,19 +601,51 @@
 <script>
 document.addEventListener('DOMContentLoaded', () => {
   const today = new Date();
-  today.setHours(0,0,0,0);
-  const events = document.querySelectorAll('.event');
-  let lastComplete = -1;
+  today.setHours(0, 0, 0, 0);
 
-  events.forEach((ev, i) => {
+  const events = Array.from(document.querySelectorAll('.event'));
+  const line = document.querySelector('.timeline-line');
+
+  const dates = events.map(ev => {
     const d = new Date(ev.getAttribute('data-date'));
-    d.setHours(0,0,0,0);
-    if (d <= today) lastComplete = i;
+    d.setHours(0, 0, 0, 0);
+    return d;
   });
 
-  events.forEach((ev, i) => {
-    if (i < lastComplete) ev.classList.add('completed');
-    else if (i === lastComplete) ev.classList.add('current', 'completed');
+  let progressPercent = 0;
+  const total = events.length - 1;
+
+  for (let i = 0; i < dates.length - 1; i++) {
+    const start = dates[i];
+    const end = dates[i + 1];
+
+    if (today >= start && today < end) {
+      const span = end - start;
+      const elapsed = today - start;
+      const fraction = elapsed / span;
+      progressPercent = ((i + fraction) / total) * 100;
+      break;
+    }
+  }
+
+  if (today >= dates[dates.length - 1]) {
+    progressPercent = 100;
+  }
+
+  if (today < dates[0]) {
+    progressPercent = 0;
+  }
+
+  setTimeout(() => {
+    line.style.setProperty('--progress', `${progressPercent}%`);
+  }, 100);
+
+  dates.forEach((d, i) => {
+    if (today > d) {
+      events[i].classList.add('completed');
+    } else if (today.getTime() === d.getTime()) {
+      events[i].classList.add('current', 'completed');
+    }
   });
 });
 </script>
@@ -415,6 +655,7 @@ function toggleDarkMode() {
   document.querySelector('.campaign-wrapper').classList.toggle('dark-mode');
 }
 </script>
+
 
             <div class="update-card">
                 <h3>Meet the Candidates forum</h3>
@@ -441,12 +682,3 @@ function toggleDarkMode() {
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
