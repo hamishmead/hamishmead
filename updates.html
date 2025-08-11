@@ -91,26 +91,44 @@
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
 
-        input, textarea, button {
-            width: 100%;
-            padding: 10px;
-            margin-top: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 1em;
-        }
+  /* ===== NAVIGATION ===== */
+nav {
+  background: linear-gradient(135deg, #003b80, #0059b3); /* Gradient from deep to medium blue */
+  padding: 10px;
+  text-align: center;
+}
 
-        button {
-            background-color: #004aad;
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-        }
+  }
 
-        button:hover {
-            background-color: #003b80;
-        }
+  nav a {
+    color: white;
+    margin: 0 15px;
+    text-decoration: none;
+    font-weight: bold;
+  }
 
+  nav a:hover {
+    text-decoration: underline;
+  }
+
+  .nav-btn {
+    padding: 0.6rem 1.2rem;
+    background: linear-gradient(135deg, #4f46e5, #3b82f6);
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    display: inline-block;
+    border: none;
+  }
+
+  .nav-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    background: linear-gradient(135deg, #6366f1, #60a5fa);
+  }
         /* ===== FOOTER ===== */
         footer {
             background: #004aad;
@@ -129,13 +147,6 @@
             margin: 0 10px;
             font-size: 1.8em;
         }
-.profile-icon {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  object-fit: cover;
-  cursor: pointer;
-}
 
     </style>
 <!-- Corrected Favicon using .jpg link -->
@@ -156,7 +167,7 @@
 
     <!-- ===== NAVIGATION ===== -->
     <nav>
-	    <a target="_self" href="index.html" >Home</a>
+	    <a target="_self" href="index.html" class="nav-btn">Home</a>
     </nav>
 
 <script>
@@ -532,10 +543,28 @@
   border-color: #22c55e;
   animation: pop-in 0.6s ease-out 1.2s forwards, pulse 1.6s ease-out 1.8s infinite;
 }
+.current .dot::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 40px;
+  height: 40px;
+  background: rgba(34,197,94,0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0.8);
+  animation: pulse-ring 1.6s ease-out infinite;
+  z-index: -1;
+}
 @keyframes pulse {
   0%   { box-shadow: 0 0 0 0 rgba(34,197,94,0.5); }
   70%  { box-shadow: 0 0 0 10px rgba(34,197,94,0); }
   100% { box-shadow: 0 0 0 0 rgba(34,197,94,0); }
+}
+@keyframes pulse-ring {
+  0%   { transform: translate(-50%, -50%) scale(0.8); opacity: 0.6; }
+  70%  { transform: translate(-50%, -50%) scale(1.4); opacity: 0; }
+  100% { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
 }
 @keyframes pop-in {
   0%   { transform: scale(0.5); opacity: 0; }
@@ -573,10 +602,11 @@
   .timeline {
     flex-direction: column;
     align-items: flex-start;
+    padding-left: 2rem;
   }
   .timeline-line {
     top: 0;
-    left: 32px;
+    left: 18px;
     width: 4px;
     height: 100%;
     background: linear-gradient(to bottom, #22c55e 0%, #22c55e var(--progress), #ccc var(--progress), #ccc 100%);
@@ -594,9 +624,48 @@
   .event p {
     white-space: normal;
     margin: 0;
+    font-size: 0.9rem;
   }
 }
 </style>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const events = Array.from(document.querySelectorAll('.event'));
+
+  // Filter those with a valid data-date
+  const datedEvents = events.filter(ev => ev.hasAttribute('data-date'));
+
+  // Sort by date ascending
+  datedEvents.sort((a, b) => {
+    const da = new Date(a.getAttribute('data-date'));
+    const db = new Date(b.getAttribute('data-date'));
+    return da - db;
+  });
+
+  // Mark completed events and detect the most recent one
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  let latestPast = null;
+
+  datedEvents.forEach(ev => {
+    const d = new Date(ev.getAttribute('data-date'));
+    d.setHours(0, 0, 0, 0);
+
+    if (d <= today) {
+      ev.classList.add('completed');
+      latestPast = ev;
+    }
+  });
+
+  // Pulse the latest completed event
+  if (latestPast) {
+    latestPast.classList.add('current');
+  }
+});
+</script>
+
+
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
