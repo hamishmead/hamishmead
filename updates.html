@@ -246,7 +246,176 @@
   <div class="embed">
    <iframe src="https://calendar.google.com/calendar/embed?src=06e6cfc494c9617882c935bdfaf7e432f0eed67b0cb71704dec5e3d5c2b39631%40group.calendar.google.com&ctz=Australia%2FBrisbane" style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
   </div>
-</div>            
+</div>      
+	<!-- Campaign Tracker -->
+<section class="campaign-tracker">
+  <h2>Campaign Tracker</h2>
+  <div class="timeline">
+    <div class="timeline-line"></div>
+
+    <div class="event" data-date="2025-07-21" data-tooltip="Nomination period has ended">
+      <span class="dot"></span><p>9 June – 21 July</p>
+    </div>
+    <div class="event" data-date="2025-07-28" data-tooltip="Candidate list has been internally published">
+      <span class="dot"></span><p>28 July</p>
+    </div>
+    <div class="event" data-date="2025-08-18" data-tooltip="Campaign has officaly started">
+      <span class="dot"></span><p>18 August</p>
+    </div>
+    <div class="event" data-date="2025-08-29" data-tooltip="Meet the candidates at the City Library">
+      <span class="dot"></span><p>29 Aug</p>
+    </div>
+    <div class="event" data-date="2025-09-07" data-tooltip="Final campaign day before voting">
+      <span class="dot"></span><p>7 Sep</p>
+    </div>
+    <div class="event" data-date="2025-09-08" data-tooltip="Voting week! Vote #1 for Hamish Mead!">
+      <span class="dot"></span><p>8–12 Sep</p>
+    </div>
+    <div class="event" data-date="2025-10-01" data-tooltip="New representives begin agenda-setting sessions">
+      <span class="dot"></span><p>Oct–Apr</p>
+    </div>
+    <div class="event" data-date="2026-02-01" data-tooltip="Term officially begins">
+      <span class="dot"></span><p>Feb 2026</p>
+    </div>
+  </div>
+</section>
+<style>
+.campaign-tracker {
+  padding: 2rem 1rem;
+  font-family: 'Segoe UI', sans-serif;
+  text-align: center;
+}
+.timeline {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  padding: 2rem 1rem;
+}
+.timeline-line {
+  position: absolute;
+  top: 40px;
+  left: 0;
+  height: 4px;
+  width: 100%;
+  background: #ccc;
+  z-index: 0;
+}
+.event {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 72px;
+}
+.dot {
+  width: 20px;
+  height: 20px;
+  background: white;
+  border: 2px solid #0078D4;
+  border-radius: 50%;
+  margin-bottom: 6px;
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+.completed .dot {
+  background: #22c55e;
+  border-color: #22c55e;
+}
+.current .dot {
+  background: #22c55e;
+  border-color: #22c55e;
+  animation: pulse 1.6s ease-out infinite;
+}
+@keyframes pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(34,197,94,0.5); }
+  70%  { box-shadow: 0 0 0 10px rgba(34,197,94,0); }
+  100% { box-shadow: 0 0 0 0 rgba(34,197,94,0); }
+}
+.event p {
+  font-size: 0.8rem;
+  margin: 0;
+  white-space: nowrap;
+}
+.event[title] {
+  position: relative;
+}
+.event[data-tooltip]::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: -2.4rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #111827;
+  color: #fff;
+  padding: 6px 8px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .2s ease;
+  z-index: 10;
+}
+.event:hover::after {
+  opacity: 1;
+}
+
+/* Mobile-friendly vertical layout */
+@media (max-width: 640px) {
+  .timeline {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .timeline-line {
+    top: 0;
+    left: 32px;
+    width: 4px;
+    height: 100%;
+  }
+  .event {
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 24px;
+    width: 100%;
+  }
+  .dot {
+    margin: 0 12px 0 0;
+  }
+  .event p {
+    white-space: normal;
+    margin: 0;
+  }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const today = new Date();
+  today.setHours(0,0,0,0);
+  const events = document.querySelectorAll('.event');
+  let lastComplete = -1;
+
+  events.forEach((ev, i) => {
+    const d = new Date(ev.getAttribute('data-date'));
+    d.setHours(0,0,0,0);
+    if (d <= today) lastComplete = i;
+  });
+
+  events.forEach((ev, i) => {
+    if (i < lastComplete) ev.classList.add('completed');
+    else if (i === lastComplete) ev.classList.add('current', 'completed');
+  });
+});
+</script>
+
+<script>
+function toggleDarkMode() {
+  document.querySelector('.campaign-wrapper').classList.toggle('dark-mode');
+}
+</script>
+
             <div class="update-card">
                 <h3>Meet the Candidates forum</h3>
                 <p>Come meet the candidates at the Cairns City Libary on August 29th! Bring all your questions ready!</p>
@@ -272,6 +441,7 @@
 
 </body>
 </html>
+
 
 
 
