@@ -597,7 +597,7 @@ nav {
   opacity: 1;
 }
 
-/* Mobile-friendly vertical layout — line centered through dot */
+/* Mobile layout — line centered through dot */
 @media (max-width: 640px) {
   .timeline {
     flex-direction: column;
@@ -605,11 +605,12 @@ nav {
     padding-left: 2rem;
   }
   .timeline-line {
-    top: 0;
-    left: 12px; /* 20px dot + 2px*2 border = 24px total; center at 12px */
+    top: 10px;
+    left: 21px;
     width: 4px;
     height: 100%;
     background: linear-gradient(to bottom, #22c55e 0%, #22c55e var(--progress), #ccc var(--progress), #ccc 100%);
+    position: absolute;
     z-index: 0;
   }
   .event {
@@ -633,88 +634,51 @@ nav {
 <script>
 document.addEventListener('DOMContentLoaded', () => {
   const events = Array.from(document.querySelectorAll('.event'));
-
-  // Filter those with a valid data-date
-  const datedEvents = events.filter(ev => ev.hasAttribute('data-date'));
-
-  // Sort by date ascending
-  datedEvents.sort((a, b) => {
-    const da = new Date(a.getAttribute('data-date'));
-    const db = new Date(b.getAttribute('data-date'));
-    return da - db;
-  });
-
-  // Mark completed events and detect the most recent one
   const today = new Date();
   today.setHours(0, 0, 0, 0);
-  let latestPast = null;
+  const datedEvents = events.filter(ev => ev.hasAttribute('data-date')).sort((a, b) =>
+    new Date(a.getAttribute('data-date')) - new Date(b.getAttribute('data-date'))
+  );
 
+  let latestPast = null;
   datedEvents.forEach(ev => {
     const d = new Date(ev.getAttribute('data-date'));
     d.setHours(0, 0, 0, 0);
-
     if (d <= today) {
       ev.classList.add('completed');
       latestPast = ev;
     }
   });
 
-  // Pulse the latest completed event
   if (latestPast) {
     latestPast.classList.add('current');
   }
-});
-</script>
 
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-
-  const events = Array.from(document.querySelectorAll('.event'));
   const line = document.querySelector('.timeline-line');
-
-  const dates = events.map(ev => {
+  const dates = datedEvents.map(ev => {
     const d = new Date(ev.getAttribute('data-date'));
     d.setHours(0, 0, 0, 0);
     return d;
   });
 
   let progressPercent = 0;
-  const total = events.length - 1;
-
-  for (let i = 0; i < dates.length - 1; i++) {
+  const total = dates.length - 1;
+  for (let i = 0; i < total; i++) {
     const start = dates[i];
     const end = dates[i + 1];
-
     if (today >= start && today < end) {
       const span = end - start;
       const elapsed = today - start;
-      const fraction = span ? (elapsed / span) : 0;
-      progressPercent = ((i + fraction) / total) * 100;
+      progressPercent = ((i + (elapsed / span)) / total) * 100;
       break;
     }
   }
-
-  if (today >= dates[dates.length - 1]) {
-    progressPercent = 100;
-  }
-
-  if (today < dates[0]) {
-    progressPercent = 0;
-  }
+  if (today >= dates[dates.length - 1]) progressPercent = 100;
+  if (today < dates[0]) progressPercent = 0;
 
   setTimeout(() => {
     line.style.setProperty('--progress', `${progressPercent}%`);
   }, 100);
-
-  dates.forEach((d, i) => {
-    if (today > d) {
-      events[i].classList.add('completed');
-    } else if (today.getTime() === d.getTime()) {
-      events[i].classList.add('current', 'completed');
-    }
-  });
 });
 </script>
 
@@ -723,8 +687,6 @@ function toggleDarkMode() {
   document.querySelector('.campaign-wrapper').classList.toggle('dark-mode');
 }
 </script>
-
-
 
             <div class="update-card">
                 <h3>Meet the Candidates forum</h3>
