@@ -597,16 +597,17 @@ nav {
   opacity: 1;
 }
 
-/* Mobile layout fix — line vertically aligned through dots */
+/* Mobile layout — line centered through dot */
 @media (max-width: 640px) {
   .timeline {
     flex-direction: column;
     align-items: flex-start;
     padding-left: 2rem;
+    position: relative;
   }
   .timeline-line {
-    top: 10px;
-    left: 21px;
+    top: 0; /* vertical line spans full container */
+    left: calc(2rem + 12px); /* center of the 24px dot (20 + 2*border) after 2rem padding */
     width: 4px;
     height: 100%;
     background: linear-gradient(to bottom, #22c55e 0%, #22c55e 0%, #ccc 0%, #ccc 100%);
@@ -633,57 +634,46 @@ nav {
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-
   const events = Array.from(document.querySelectorAll('.event'));
   const line = document.querySelector('.timeline-line');
 
-  const dates = events.map(ev => {
+  // Mark completed and current (most recent past)
+  const today = new Date(); today.setHours(0,0,0,0);
+  let latestPast = null;
+  events.forEach(ev => {
     const d = new Date(ev.getAttribute('data-date'));
-    d.setHours(0, 0, 0, 0);
-    return d;
+    d.setHours(0,0,0,0);
+    if (d <= today) { ev.classList.add('completed'); latestPast = ev; }
   });
+  if (latestPast) latestPast.classList.add('current');
+
+  // Compute progress percent by time between milestones
+  const dates = events.map(ev => {
+    const d = new Date(ev.getAttribute('data-date')); d.setHours(0,0,0,0); return d;
+  }).filter(d => !isNaN(d));
 
   let progressPercent = 0;
   const total = dates.length - 1;
-
   for (let i = 0; i < total; i++) {
-    const start = dates[i];
-    const end = dates[i + 1];
+    const start = dates[i], end = dates[i+1];
     if (today >= start && today < end) {
-      const span = end - start;
-      const elapsed = today - start;
+      const span = end - start, elapsed = today - start;
       progressPercent = ((i + (elapsed / span)) / total) * 100;
       break;
     }
   }
-
   if (today >= dates[dates.length - 1]) progressPercent = 100;
   if (today < dates[0]) progressPercent = 0;
 
-  // ✨ Apply gradient direction based on viewport
-  const isMobile = window.matchMedia("(max-width: 640px)").matches;
-  const gradientDirection = isMobile ? "to bottom" : "to right";
-  const gradient = `linear-gradient(${gradientDirection}, #22c55e 0%, #22c55e ${progressPercent}%, #ccc ${progressPercent}%, #ccc 100%)`;
+  function applyGradient() {
+    const isMobile = window.matchMedia('(max-width: 640px)').matches;
+    const dir = isMobile ? 'to bottom' : 'to right';
+    line.style.background = `linear-gradient(${dir}, #22c55e 0%, #22c55e ${progressPercent}%, #ccc ${progressPercent}%, #ccc 100%)`;
+  }
 
-  line.style.setProperty('--progress', `${progressPercent}%`);
-  line.style.background = gradient;
-
-  dates.forEach((d, i) => {
-    if (today > d) {
-      events[i].classList.add('completed');
-    } else if (today.getTime() === d.getTime()) {
-      events[i].classList.add('current', 'completed');
-    }
-  });
+  applyGradient();
+  window.addEventListener('resize', applyGradient);
 });
-</script>
-
-<script>
-function toggleDarkMode() {
-  document.querySelector('.campaign-wrapper').classList.toggle('dark-mode');
-}
 </script>
 
 
