@@ -511,7 +511,7 @@ nav {
   left: 0;
   height: 4px;
   width: 100%;
-  background: linear-gradient(to right, #22c55e 0%, #22c55e var(--progress), #ccc var(--progress), #ccc 100%);
+  background: linear-gradient(to right, #22c55e 0%, #22c55e 0%, #ccc 0%, #ccc 100%);
   z-index: 0;
   transition: background 1.2s ease-in-out;
 }
@@ -597,7 +597,7 @@ nav {
   opacity: 1;
 }
 
-/* Mobile layout — line centered through dot */
+/* Mobile layout fix — line vertically aligned through dots */
 @media (max-width: 640px) {
   .timeline {
     flex-direction: column;
@@ -609,7 +609,7 @@ nav {
     left: 21px;
     width: 4px;
     height: 100%;
-    background: linear-gradient(to bottom, #22c55e 0%, #22c55e var(--progress), #ccc var(--progress), #ccc 100%);
+    background: linear-gradient(to bottom, #22c55e 0%, #22c55e 0%, #ccc 0%, #ccc 100%);
     position: absolute;
     z-index: 0;
   }
@@ -633,29 +633,13 @@ nav {
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  const events = Array.from(document.querySelectorAll('.event'));
   const today = new Date();
   today.setHours(0, 0, 0, 0);
-  const datedEvents = events.filter(ev => ev.hasAttribute('data-date')).sort((a, b) =>
-    new Date(a.getAttribute('data-date')) - new Date(b.getAttribute('data-date'))
-  );
 
-  let latestPast = null;
-  datedEvents.forEach(ev => {
-    const d = new Date(ev.getAttribute('data-date'));
-    d.setHours(0, 0, 0, 0);
-    if (d <= today) {
-      ev.classList.add('completed');
-      latestPast = ev;
-    }
-  });
-
-  if (latestPast) {
-    latestPast.classList.add('current');
-  }
-
+  const events = Array.from(document.querySelectorAll('.event'));
   const line = document.querySelector('.timeline-line');
-  const dates = datedEvents.map(ev => {
+
+  const dates = events.map(ev => {
     const d = new Date(ev.getAttribute('data-date'));
     d.setHours(0, 0, 0, 0);
     return d;
@@ -663,6 +647,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let progressPercent = 0;
   const total = dates.length - 1;
+
   for (let i = 0; i < total; i++) {
     const start = dates[i];
     const end = dates[i + 1];
@@ -673,12 +658,25 @@ document.addEventListener('DOMContentLoaded', () => {
       break;
     }
   }
+
   if (today >= dates[dates.length - 1]) progressPercent = 100;
   if (today < dates[0]) progressPercent = 0;
 
-  setTimeout(() => {
-    line.style.setProperty('--progress', `${progressPercent}%`);
-  }, 100);
+  // ✨ Apply gradient direction based on viewport
+  const isMobile = window.matchMedia("(max-width: 640px)").matches;
+  const gradientDirection = isMobile ? "to bottom" : "to right";
+  const gradient = `linear-gradient(${gradientDirection}, #22c55e 0%, #22c55e ${progressPercent}%, #ccc ${progressPercent}%, #ccc 100%)`;
+
+  line.style.setProperty('--progress', `${progressPercent}%`);
+  line.style.background = gradient;
+
+  dates.forEach((d, i) => {
+    if (today > d) {
+      events[i].classList.add('completed');
+    } else if (today.getTime() === d.getTime()) {
+      events[i].classList.add('current', 'completed');
+    }
+  });
 });
 </script>
 
@@ -687,6 +685,7 @@ function toggleDarkMode() {
   document.querySelector('.campaign-wrapper').classList.toggle('dark-mode');
 }
 </script>
+
 
             <div class="update-card">
                 <h3>Meet the Candidates forum</h3>
