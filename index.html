@@ -5,132 +5,152 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hamish Mead - Candidate for Youth Council</title>
 
-    <style>
-        /* ===== GENERAL STYLING ===== */
-.header {
-  display: flex;
-  align-items: center;
-  justify-content: center; /* centers the whole block horizontally */
-  gap: 30px; /* space between image and text */
-  padding: 20px;
-}
+<style>
+  /* ===== GENERAL STYLING ===== */
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    color: #222;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+  }
 
-.profile-icon {
-  width: 150px !important;
-  height: 150px !important;
-  border-radius: 50%;
-  object-fit: cover;
-  display: block;
-}
+  header {
+    background: linear-gradient(135deg, #004aad, #0088cc);
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+  }
 
-.header-content {
+  header h1 {
+    margin: 0;
+    font-size: 2.5em;
+  }
+
+  section {
+    max-width: 900px;
+    margin: auto;
+    padding: 20px;
+  }
+
+  h2 {
+    color: #004aad;
+    border-bottom: 2px solid #004aad;
+    padding-bottom: 5px;
+  }
+
+  /* ===== NAVIGATION ===== */
+nav {
+  background: linear-gradient(135deg, #003b80, #0059b3); /* Gradient from deep to medium blue */
+  padding: 10px;
   text-align: center;
 }
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
-            color: #222;
-            margin: 0;
-            padding: 0;
-            line-height: 1.6;
-        }
 
-        header {
-            background: linear-gradient(135deg, #004aad, #0088cc);
-            color: white;
-            padding: 20px 0;
-            text-align: center;
-        }
+  }
 
-        header h1 {
-            margin: 0;
-            font-size: 2.5em;
-        }
+  nav a {
+    color: white;
+    margin: 0 15px;
+    text-decoration: none;
+    font-weight: bold;
+  }
 
-        nav {
-            background-color: #003b80;
-            padding: 10px;
-            text-align: center;
-        }
+  nav a:hover {
+    text-decoration: underline;
+  }
 
-        nav a {
-            color: white;
-            margin: 0 15px;
-            text-decoration: none;
-            font-weight: bold;
-        }
+  .nav-btn {
+    padding: 0.6rem 1.2rem;
+    background: linear-gradient(135deg, #4f46e5, #3b82f6);
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    display: inline-block;
+    border: none;
+  }
 
-        nav a:hover {
-            text-decoration: underline;
-        }
+  .nav-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    background: linear-gradient(135deg, #6366f1, #60a5fa);
+  }
 
-        section {
-            max-width: 900px;
-            margin: auto;
-            padding: 20px;
-        }
+  /* ===== HEADER BLOCK ===== */
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    padding: 20px;
+  }
 
-        h2 {
-            color: #004aad;
-            border-bottom: 2px solid #004aad;
-            padding-bottom: 5px;
-        }
+  .header-content {
+    text-align: center;
+  }
 
-        /* ===== FORM STYLING ===== */
-        form {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
+  .profile-icon {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+    cursor: pointer;
+  }
 
-        input, textarea, button {
-            width: 100%;
-            padding: 10px;
-            margin-top: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 1em;
-        }
+  /* ===== FORM STYLING ===== */
+  form {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  }
 
-        button {
-            background-color: #004aad;
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-        }
+  input, textarea, button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+  }
 
-        button:hover {
-            background-color: #003b80;
-        }
+  button {
+    background-color: #004aad;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+  }
 
-        /* ===== FOOTER ===== */
-        footer {
-            background: #004aad;
-            color: white;
-            text-align: center;
-            padding: 15px 0;
-            margin-top: 20px;
-        }
+  button:hover {
+    background-color: #003b80;
+  }
 
-        .social-icons {
-            margin-top: 10px;
-        }
+  /* ===== FOOTER ===== */
+  footer {
+    background: #004aad;
+    color: white;
+    text-align: center;
+    padding: 15px 0;
+    margin-top: 20px;
+  }
 
-        .social-icons a {
-            color: white;
-            margin: 0 10px;
-            font-size: 1.8em;
-        }
-.profile-icon {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  object-fit: cover;
-  cursor: pointer;
-}
+  .social-icons {
+    margin-top: 10px;
+  }
 
-    </style>
+  .social-icons a {
+    color: white;
+    margin: 0 10px;
+    font-size: 1.8em;
+  }
+</style>
+
+
+
 <!-- Corrected Favicon using .jpg link -->
 <link rel="icon" type="image/jpeg" href="icon.jpg" />
 </head>
@@ -148,12 +168,212 @@
 
 
     <!-- ===== NAVIGATION ===== -->
-    <nav>
-        <a href="#about">About Me</a>
-        <a href="#vision">My Vision</a>
-        <a href="#contact">Ask Me Anything</a>
-	<a href="updates.html">Updates</a>
-    </nav>
+ <nav class="navbar">
+  <a href="#about" class="nav-btn">About Me</a>
+  <a href="#vision" class="nav-btn">My Vision</a>
+  <a href="#contact" class="nav-btn">Ask Me Anything</a>
+  <a href="updates.html" class="nav-btn">Updates</a>
+</nav>
+
+<script>
+(() => {
+  const STORAGE_KEY = "theme";
+  const root = document.documentElement;
+
+  // Scoped fallback styles: do NOT set body text color; only main content
+  (function injectScopedStyles() {
+    if (document.getElementById("__theme_scoped_styles")) return;
+    const style = document.createElement("style");
+    style.id = "__theme_scoped_styles";
+    style.textContent = `
+      :root[data-theme="light"] {
+        color-scheme: light;
+        --bg: #ffffff;
+        --text: #0f172a;
+        --muted: #64748b;
+        --card: #ffffff;
+        --border: #e5e7eb;
+        --link: #2563eb;
+      }
+      :root[data-theme="dark"] {
+        color-scheme: dark;
+        --bg: #0b0f17;
+        --text: #e5e7eb;
+        --muted: #9aa3b2;
+        --card: #101624;
+        --border: #1f2937;
+        --link: #93c5fd;
+      }
+
+      /* Background only; do NOT set body color to avoid affecting header/footer text */
+      body {
+        background: var(--bg);
+        transition: background-color 180ms ease;
+        margin: 0;
+      }
+
+      /* Text and link colors limited to main content areas */
+      main, section, article, aside {
+        color: var(--text);
+        background: transparent;
+      }
+      main a, section a, article a, aside a { color: var(--link); }
+      main h1, main h2, main h3, main h4, main h5, main h6,
+      section h1, section h2, section h3, section h4, section h5, section h6,
+      article h1, article h2, article h3, article h4, article h5, article h6,
+      aside h1, aside h2, aside h3, aside h4, aside h5, aside h6 {
+        color: var(--text);
+      }
+
+      /* Forms: scoped to content only */
+      main input, main textarea, main select,
+      section input, section textarea, section select,
+      article input, article textarea, article select,
+      aside input, aside textarea, aside select {
+        background: var(--card);
+        color: var(--text);
+        border: 1px solid var(--border);
+      }
+      main input::placeholder, main textarea::placeholder,
+      section input::placeholder, section textarea::placeholder,
+      article input::placeholder, article textarea::placeholder,
+      aside input::placeholder, aside textarea::placeholder { color: var(--muted); }
+    `;
+    (document.head || document.documentElement).appendChild(style);
+  })();
+
+  // Decide initial theme: saved > existing state > system
+  function detectInitialTheme() {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved === "dark" || saved === "light") return saved;
+    } catch {}
+    const ds = (root.dataset.theme || "").toLowerCase();
+    if (ds === "dark" || ds === "light") return ds;
+    if (root.classList.contains("dark") || root.classList.contains("dark-mode")) return "dark";
+    return (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) ? "dark" : "light";
+  }
+
+  // Apply theme: only set data-theme (do NOT add/remove classes to avoid touching your header/footer styles)
+  function applyTheme(theme) {
+    root.dataset.theme = theme;
+    root.style.colorScheme = theme;
+    try { localStorage.setItem(STORAGE_KEY, theme); } catch {}
+    updateButton(theme);
+  }
+
+  function getCurrentTheme() {
+    return root.dataset.theme === "dark" ? "dark" : "light";
+  }
+  const opposite = t => (t === "dark" ? "light" : "dark");
+
+  // Button (Shadow DOM) — same look, emoji + text, 50% bg
+  function mountButton() {
+    const mountWhenReady = () => {
+      if (!document.body) return void requestAnimationFrame(mountWhenReady);
+
+      let host = document.getElementById("__theme_toggle_host");
+      if (!host) {
+        host = document.createElement("div");
+        host.id = "__theme_toggle_host";
+        host.style.position = "fixed";
+        host.style.right = "18px";
+        host.style.bottom = "18px";
+        host.style.zIndex = "2147483647";
+        host.style.pointerEvents = "auto";
+        document.body.appendChild(host);
+      }
+
+      const shadow = host.shadowRoot || host.attachShadow({ mode: "open" });
+      if (!shadow.getElementById("style")) {
+        const style = document.createElement("style");
+        style.id = "style";
+        style.textContent = `
+          :host { all: initial; }
+          button {
+            all: unset;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 14px;
+            border-radius: 9999px;
+            border: 1px solid rgba(0,0,0,0.25);
+            background-color: rgba(0,0,0,0.5); /* 50% in light */
+            color: #ffffff;
+            font: 600 14px/1 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+            letter-spacing: 0.25px;
+            cursor: pointer;
+            white-space: nowrap;
+            -webkit-backdrop-filter: blur(6px) saturate(140%);
+            backdrop-filter: blur(6px) saturate(140%);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.18);
+            transition: transform 160ms ease, box-shadow 180ms ease, background-color 180ms ease, color 180ms ease, border-color 180ms ease;
+          }
+          button:hover { transform: translateY(-2px); box-shadow: 0 8px 18px rgba(0,0,0,0.25); }
+          button:active { transform: translateY(0); }
+          button:focus-visible {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(59,130,246,0.35), 0 6px 14px rgba(0,0,0,0.22);
+          }
+          .emoji { font-size: 14px; line-height: 1; }
+          .label { font-size: 14px; line-height: 1; }
+        `;
+        shadow.appendChild(style);
+      }
+
+      let btn = shadow.getElementById("themeToggle");
+      if (!btn) {
+        btn = document.createElement("button");
+        btn.id = "themeToggle";
+        btn.addEventListener("click", () => applyTheme(opposite(getCurrentTheme())));
+        shadow.appendChild(btn);
+      }
+
+      updateButton(getCurrentTheme(), btn);
+    };
+    mountWhenReady();
+  }
+
+  // Keep button label and colors in sync with current theme
+  function updateButton(currentThemeVal, buttonEl) {
+    let btn = buttonEl;
+    if (!btn) {
+      const host = document.getElementById("__theme_toggle_host");
+      if (!host || !host.shadowRoot) return;
+      btn = host.shadowRoot.getElementById("themeToggle");
+      if (!btn) return;
+    }
+    const next = opposite(currentThemeVal);
+    const emoji = next === "dark" ? "🌙" : "☀️";
+
+    if (currentThemeVal === "dark") {
+      btn.style.backgroundColor = "rgba(255,255,255,0.5)";  // 50% light bg in dark
+      btn.style.borderColor = "rgba(255,255,255,0.3)";
+      btn.style.color = "#111827";
+    } else {
+      btn.style.backgroundColor = "rgba(0,0,0,0.5)";        // 50% dark bg in light
+      btn.style.borderColor = "rgba(0,0,0,0.25)";
+      btn.style.color = "#ffffff";
+    }
+    btn.setAttribute("aria-label", `Switch to ${next} mode`);
+    btn.innerHTML = `<span class="emoji" aria-hidden="true">${emoji}</span><span class="label">${next[0].toUpperCase()}${next.slice(1)}</span>`;
+  }
+
+  // Init
+  const initial = detectInitialTheme();
+  applyTheme(initial);
+  mountButton();
+
+  // Follow OS changes only if user hasn't chosen yet
+  try {
+    if (localStorage.getItem(STORAGE_KEY) == null && window.matchMedia) {
+      const mql = window.matchMedia("(prefers-color-scheme: dark)");
+      mql.addEventListener("change", e => applyTheme(e.matches ? "dark" : "light"));
+    }
+  } catch {}
+})();
+</script>
+
 
     <!-- ===== ABOUT SECTION ===== -->
     <section id="about">
@@ -196,10 +416,8 @@
   </a>
 </div>
     </footer>
-
 </body>
 </html>
-
 
 
 
