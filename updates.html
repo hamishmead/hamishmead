@@ -459,6 +459,54 @@ nav {
   </div>
 </div>      
 	<!-- Campaign Tracker -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const events = Array.from(document.querySelectorAll('.event'));
+  const line = document.querySelector('.timeline-line');
+
+  const today = new Date(); today.setHours(0,0,0,0);
+  let latestPast = null;
+  events.forEach(ev => {
+    const d = new Date(ev.getAttribute('data-date'));
+    d.setHours(0,0,0,0);
+    if (d <= today) { ev.classList.add('completed'); latestPast = ev; }
+  });
+  if (latestPast) latestPast.classList.add('current');
+
+  const dates = events.map(ev => {
+    const d = new Date(ev.getAttribute('data-date')); d.setHours(0,0,0,0); return d;
+  }).filter(d => !isNaN(d));
+
+  let progressPercent = 0;
+  const total = dates.length - 1;
+  for (let i = 0; i < total; i++) {
+    const start = dates[i], end = dates[i+1];
+    if (today >= start && today < end) {
+      const span = end - start, elapsed = today - start;
+      progressPercent = ((i + (elapsed / span)) / total) * 100;
+      break;
+    }
+  }
+  if (today >= dates[dates.length - 1]) progressPercent = 100;
+  if (today < dates[0]) progressPercent = 0;
+
+  function applyGradient() {
+    const isMobile = window.matchMedia('(max-width: 640px)').matches;
+    const dir = isMobile ? 'to bottom' : 'to right';
+    line.style.background = `linear-gradient(${dir}, #22c55e 0%, #22c55e ${progressPercent}%, #ccc ${progressPercent}%, #ccc 100%)`;
+  }
+
+  applyGradient();
+  window.addEventListener('resize', applyGradient);
+});
+</script>
+All logic's intact now and you're clear to deploy. If you're testing touch behavior and want optional dismiss or animation for the tooltip next, just say the word.
+
+now put that into the main code
+Here's your complete, fully integrated HTML, CSS, and JavaScript block with the mobile tooltip position fix in place—clean, drop-in ready, no missing pieces:
+
+html
+<!-- Campaign Tracker -->
 <section class="campaign-tracker">
   <h2>Campaign Tracker</h2>
   <div class="timeline">
@@ -576,12 +624,11 @@ nav {
   margin: 0;
   white-space: nowrap;
 }
+
+/* Tooltip Styles */
 .event[data-tooltip]::after {
   content: attr(data-tooltip);
   position: absolute;
-  bottom: -2.4rem;
-  left: 50%;
-  transform: translateX(-50%);
   background: #111827;
   color: #fff;
   padding: 6px 8px;
@@ -593,11 +640,16 @@ nav {
   transition: opacity .2s ease;
   z-index: 10;
 }
-.event:hover::after {
-  opacity: 1;
+@media (min-width: 641px) {
+  .event[data-tooltip]::after {
+    bottom: -2.4rem;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .event:hover::after {
+    opacity: 1;
+  }
 }
-
-/* Mobile layout — line centered through dot */
 @media (max-width: 640px) {
   .timeline {
     flex-direction: column;
@@ -606,8 +658,8 @@ nav {
     position: relative;
   }
   .timeline-line {
-    top: 0; /* vertical line spans full container */
-    left: calc(2rem + 12px); /* center of the 24px dot (20 + 2*border) after 2rem padding */
+    top: 0;
+    left: calc(2rem + 12px);
     width: 4px;
     height: 100%;
     background: linear-gradient(to bottom, #22c55e 0%, #22c55e 0%, #ccc 0%, #ccc 100%);
@@ -629,15 +681,24 @@ nav {
     margin: 0;
     font-size: 0.9rem;
   }
+  .event[data-tooltip]::after {
+    top: 50%;
+    left: calc(100% + 10px);
+    transform: translateY(-50%);
+  }
+  .event:active::after {
+    opacity: 1;
+  }
 }
 </style>
+
+<!-- (Everything above stays exactly as in your last working version, no changes needed) -->
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
   const events = Array.from(document.querySelectorAll('.event'));
   const line = document.querySelector('.timeline-line');
 
-  // Mark completed and current (most recent past)
   const today = new Date(); today.setHours(0,0,0,0);
   let latestPast = null;
   events.forEach(ev => {
@@ -647,9 +708,10 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   if (latestPast) latestPast.classList.add('current');
 
-  // Compute progress percent by time between milestones
   const dates = events.map(ev => {
-    const d = new Date(ev.getAttribute('data-date')); d.setHours(0,0,0,0); return d;
+    const d = new Date(ev.getAttribute('data-date'));
+    d.setHours(0,0,0,0);
+    return d;
   }).filter(d => !isNaN(d));
 
   let progressPercent = 0;
