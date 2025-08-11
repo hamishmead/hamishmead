@@ -459,53 +459,6 @@ nav {
   </div>
 </div>      
 	<!-- Campaign Tracker -->
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const events = Array.from(document.querySelectorAll('.event'));
-  const line = document.querySelector('.timeline-line');
-
-  const today = new Date(); today.setHours(0,0,0,0);
-  let latestPast = null;
-  events.forEach(ev => {
-    const d = new Date(ev.getAttribute('data-date'));
-    d.setHours(0,0,0,0);
-    if (d <= today) { ev.classList.add('completed'); latestPast = ev; }
-  });
-  if (latestPast) latestPast.classList.add('current');
-
-  const dates = events.map(ev => {
-    const d = new Date(ev.getAttribute('data-date')); d.setHours(0,0,0,0); return d;
-  }).filter(d => !isNaN(d));
-
-  let progressPercent = 0;
-  const total = dates.length - 1;
-  for (let i = 0; i < total; i++) {
-    const start = dates[i], end = dates[i+1];
-    if (today >= start && today < end) {
-      const span = end - start, elapsed = today - start;
-      progressPercent = ((i + (elapsed / span)) / total) * 100;
-      break;
-    }
-  }
-  if (today >= dates[dates.length - 1]) progressPercent = 100;
-  if (today < dates[0]) progressPercent = 0;
-
-  function applyGradient() {
-    const isMobile = window.matchMedia('(max-width: 640px)').matches;
-    const dir = isMobile ? 'to bottom' : 'to right';
-    line.style.background = `linear-gradient(${dir}, #22c55e 0%, #22c55e ${progressPercent}%, #ccc ${progressPercent}%, #ccc 100%)`;
-  }
-
-  applyGradient();
-  window.addEventListener('resize', applyGradient);
-});
-</script>
-All logic's intact now and you're clear to deploy. If you're testing touch behavior and want optional dismiss or animation for the tooltip next, just say the word.
-
-now put that into the main code
-Here's your complete, fully integrated HTML, CSS, and JavaScript block with the mobile tooltip position fix in place—clean, drop-in ready, no missing pieces:
-
-html
 <!-- Campaign Tracker -->
 <section class="campaign-tracker">
   <h2>Campaign Tracker</h2>
@@ -521,7 +474,7 @@ html
     <div class="event" data-date="2025-08-18" data-tooltip="Campaign has officially started">
       <span class="dot"></span><p>18 August</p>
     </div>
-    <div class="event" data-date="2025-08-29" data-tooltip="Meet the candidates at the City Library">
+    <div class="event" data-date="2025-08-29" data-tooltip="Meet the candidates at the City Library. Arrive from 5pm and leave at 7:30">
       <span class="dot"></span><p>29 Aug</p>
     </div>
     <div class="event" data-date="2025-09-07" data-tooltip="Final campaign day before voting">
@@ -640,6 +593,8 @@ html
   transition: opacity .2s ease;
   z-index: 10;
 }
+
+/* Desktop: tooltip below dot on hover */
 @media (min-width: 641px) {
   .event[data-tooltip]::after {
     bottom: -2.4rem;
@@ -650,6 +605,8 @@ html
     opacity: 1;
   }
 }
+
+/* Mobile layout and tooltip beside date on tap */
 @media (max-width: 640px) {
   .timeline {
     flex-direction: column;
@@ -686,19 +643,19 @@ html
     left: calc(100% + 10px);
     transform: translateY(-50%);
   }
-  .event:active::after {
+  .event.show-tooltip::after {
     opacity: 1;
   }
 }
 </style>
 
-<!-- (Everything above stays exactly as in your last working version, no changes needed) -->
-
 <script>
 document.addEventListener('DOMContentLoaded', () => {
   const events = Array.from(document.querySelectorAll('.event'));
   const line = document.querySelector('.timeline-line');
+  const mm = window.matchMedia('(max-width: 640px)');
 
+  // Mark completed and current
   const today = new Date(); today.setHours(0,0,0,0);
   let latestPast = null;
   events.forEach(ev => {
@@ -708,6 +665,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   if (latestPast) latestPast.classList.add('current');
 
+  // Progress gradient across milestones
   const dates = events.map(ev => {
     const d = new Date(ev.getAttribute('data-date'));
     d.setHours(0,0,0,0);
@@ -728,16 +686,42 @@ document.addEventListener('DOMContentLoaded', () => {
   if (today < dates[0]) progressPercent = 0;
 
   function applyGradient() {
-    const isMobile = window.matchMedia('(max-width: 640px)').matches;
-    const dir = isMobile ? 'to bottom' : 'to right';
+    const dir = mm.matches ? 'to bottom' : 'to right';
     line.style.background = `linear-gradient(${dir}, #22c55e 0%, #22c55e ${progressPercent}%, #ccc ${progressPercent}%, #ccc 100%)`;
   }
 
   applyGradient();
   window.addEventListener('resize', applyGradient);
+
+  // Mobile tooltip toggle on tap
+  function clearTooltips(except) {
+    events.forEach(ev => { if (ev !== except) ev.classList.remove('show-tooltip'); });
+  }
+  events.forEach(ev => {
+    ev.addEventListener('click', (e) => {
+      if (!mm.matches) return; // only on mobile
+      e.stopPropagation();
+      const show = !ev.classList.contains('show-tooltip');
+      clearTooltips(ev);
+      if (show) ev.classList.add('show-tooltip'); else ev.classList.remove('show-tooltip');
+    });
+  });
+  document.addEventListener('click', () => {
+    if (mm.matches) clearTooltips();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') clearTooltips();
+  });
+
+  // Handle media query changes (mobile <-> desktop)
+  const mqChange = () => { clearTooltips(); applyGradient(); };
+  if (typeof mm.addEventListener === 'function') {
+    mm.addEventListener('change', mqChange);
+  } else if (typeof mm.addListener === 'function') {
+    mm.addListener(mqChange);
+  }
 });
 </script>
-
 
             <div class="update-card">
                 <h3>Meet the Candidates forum</h3>
