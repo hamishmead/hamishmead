@@ -1,181 +1,654 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hamish Mead - Candidate for Youth Council</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hamish Mead - Candidate for Youth Council</title>
+  <link rel="icon" type="image/jpeg" href="icon.jpg" />
 
-<style>
-  /* ===== GENERAL STYLING ===== */
-  body {
-    font-family: Arial, sans-serif;
-    background-color: #f5f5f5;
-    color: #222;
-    margin: 0;
-    padding: 0;
-    line-height: 1.6;
+  <style>
+    /* ===== GENERAL STYLING ===== */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      color: #222;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+    }
+
+    header {
+      background: linear-gradient(135deg, #004aad, #0088cc);
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.5em;
+    }
+
+    section {
+      max-width: 900px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    h2 {
+      color: #ffffff;
+      border-bottom: 2px solid #ffffff;
+      padding-bottom: 5px;
+      margin-top: 40px;
+    }
+
+    /* ===== NAVIGATION ===== */
+    nav {
+      background: linear-gradient(135deg, #003b80, #0059b3);
+      padding: 10px;
+      text-align: center;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: white;
+      margin: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      display: inline-block;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    .nav-btn {
+      padding: 0.6rem 1.2rem;
+      background: linear-gradient(135deg, #4f46e5, #3b82f6);
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+      border: none;
+    }
+
+    .nav-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      background: linear-gradient(135deg, #6366f1, #60a5fa);
+    }
+/* ===== CARD STYLING ===== */
+.card {
+  background: var(--card);
+  color: var(--text);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 900px;
+  transition: background 180ms ease, color 180ms ease;
+}
+
+.card h2 {
+  margin-top: 0;
+  color: var(--text);
+  border-bottom: 2px solid var(--border);
+  padding-bottom: 5px;
+}
+
+.card ul {
+  padding-left: 20px;
+}
+
+.card li {
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+
+/* ===== ABOUT CARD PROFILE LAYOUT ===== */
+.about-card {
+  background: linear-gradient(to bottom, #1f2937, #0f172a); /* Dark gray to near-black */
+  color: white;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  padding: 20px;
+  max-width: 900px;
+  margin: 40px auto 0 auto;
+  text-align: center;
+  transition: transform 200ms ease;
+}
+
+.about-card h2 {
+  font-size: 1.4em;
+  margin-bottom: 10px;
+}
+
+.about-card p {
+  font-size: 0.95em;
+  line-height: 1.6;
+  margin: 0 auto;
+  max-width: 800px;
+}
+
+/* Optional hover effect */
+.about-card:hover {
+  transform: scale(1.02);
+}
+
+.about-content {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.about-profile {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.about-text {
+  flex: 1;
+  min-width: 200px;
+}
+
+/* ===== FORM CONTAINER ===== */
+.form-container {
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.form-container iframe {
+  width: 100%;
+  height: 600px;
+  border: none;
+}
+
+/* ===== MOBILE RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .card {
+    margin: 15px 10px;
+    padding: 16px;
   }
 
-  header {
-    background: linear-gradient(135deg, #004aad, #0088cc);
-    color: white;
-    padding: 20px 0;
+  .form-container iframe {
+    height: 500px;
+  }
+
+  .about-content {
+    flex-direction: column;
     text-align: center;
   }
 
-  header h1 {
-    margin: 0;
-    font-size: 2.5em;
+  .about-profile {
+    margin-bottom: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+    padding: 14px;
   }
 
-  section {
-    max-width: 900px;
-    margin: auto;
-    padding: 20px;
+  .form-container iframe {
+    height: 420px;
   }
 
-  h2 {
-    color: #004aad;
-    border-bottom: 2px solid #004aad;
-    padding-bottom: 5px;
+  .card h2 {
+    font-size: 1.4em;
   }
 
-  /* ===== NAVIGATION ===== */
-nav {
-  background: linear-gradient(135deg, #003b80, #0059b3); /* Gradient from deep to medium blue */
-  padding: 10px;
+  .card li {
+    font-size: 0.95em;
+  }
+
+  .about-profile {
+    width: 120px;
+    height: 120px;
+  }
+}
+/* ===== MY VISION SECTION ===== */
+#vision {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+#vision h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 1.8em;
+  color: var(--text);
+  border-bottom: 2px solid var(--border);
+  padding-bottom: 5px;
+}
+
+/* === Card Grid === */
+.vision-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.vision-card {
+  background: var(--card);
+  color: var(--text);
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  padding: 20px;
+  transition: transform 200ms ease;
+}
+
+.vision-card:hover {
+  transform: scale(1.03);
+}
+
+.vision-card h3 {
+  font-size: 1.3em;
+  margin-bottom: 10px;
+  color: var(--text);
   text-align: center;
 }
 
-  }
+.vision-card p {
+  font-size: 0.95em;
+  line-height: 1.6;
+  text-align: left;
+  max-width: 360px;
+  margin: 0 auto;
+}
 
-  nav a {
-    color: white;
-    margin: 0 15px;
-    text-decoration: none;
-    font-weight: bold;
-  }
+.vision-section {
+  margin: 3rem auto;
+  max-width: 1000px;
+  padding: 0 1rem;
+}
 
-  nav a:hover {
-    text-decoration: underline;
-  }
+.vision-section h2 {
+  font-size: 2rem;
+  text-align: center;
+  color: #004aad;
+  margin-bottom: 2rem;
+}
 
-  .nav-btn {
-    padding: 0.6rem 1.2rem;
-    background: linear-gradient(135deg, #4f46e5, #3b82f6);
-    color: white;
-    text-decoration: none;
-    border-radius: 8px;
-    font-weight: 600;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-    display: inline-block;
-    border: none;
-  }
+.vision-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
 
-  .nav-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    background: linear-gradient(135deg, #6366f1, #60a5fa);
-  }
+.vision-card {
+  padding: 1.5rem;
+  border-radius: 12px;
+  color: white;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+  transition: transform 0.2s ease;
+}
 
-  /* ===== HEADER BLOCK ===== */
+.vision-card:hover {
+  transform: translateY(-4px);
+}
+
+.vision-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.vision-card {
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  padding: 20px;
+  transition: transform 200ms ease;
+  color: white;
+}
+
+.vision-card h3 {
+  font-size: 1.3em;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.vision-card p {
+  font-size: 0.95em;
+  line-height: 1.6;
+  text-align: left;
+  max-width: 360px;
+  margin: 0 auto;
+}
+
+/* Base card: keep your existing padding, shadow, etc. */
+.vision-card {
+  position: relative;
+  border-radius: 14px;
+  border: 5px solid transparent;             /* real border area */
+  background: var(--card-bg) padding-box;     /* inner background only */
+  background-clip: padding-box, border-box;   /* enable 2-layer clip */
+  transition: transform 200ms ease;
+}
+
+/* Hover: add animated gradient layer ONLY to the border area */
+.vision-card:hover {
+  background:
+    var(--card-bg) padding-box,                                        /* inner bg (unchanged) */
+    linear-gradient(270deg, var(--border-c1), var(--border-c2), var(--border-c1)) border-box; /* border layer */
+  background-size: auto, 300% 300%;
+  background-position: 0 0, 0% 50%;
+  animation: visionBorderShift 5s linear infinite;                     /* animate the border layer */
+  transform: scale(1.03);
+}
+
+/* Keyframes animate only the second (border) layer’s position */
+@keyframes visionBorderShift {
+  0%   { background-position: 0 0,   0% 50%; }
+  50%  { background-position: 0 0, 100% 50%; }
+  100% { background-position: 0 0,   0% 50%; }
+}
+
+/* Per-card themes (keeps your top-to-bottom gradients) */
+.vision-card.mental {
+  --card-bg: linear-gradient(to bottom, #3b82f6, #1e40af);
+  --border-c1: #60a5fa; --border-c2: #3C787E;
+}
+
+.vision-card.academic {
+  --card-bg: linear-gradient(to bottom, #10b981, #065f46);
+  --border-c1: #34d399; --border-c2: #3E2F5B;
+}
+
+.vision-card.events {
+  --card-bg: linear-gradient(to bottom, #f59e0b, #b45309);
+  --border-c1: #fbbf24; --border-c2: #247B7B;
+}
+
+/* Force About Me text to white */
+.about-card,
+.about-card h2,
+.about-card p,
+.about-card a,
+.about-card li,
+.about-card h3,
+.about-card h4,
+.about-card h5,
+.about-card h6 {
+  color: #fff;
+}
+.about-card h2 {
+  border-bottom-color: rgba(255, 255, 255, 0.6);
+}
+
+    /* ===== HEADER BLOCK ===== */
+.header {
+  background: linear-gradient(135deg, #004aad, #0088cc);
+  color: white;
+  padding: 20px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.profile-icon {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.header-text h1 {
+  margin: 0;
+  font-size: 1.8em;
+}
+
+.header-text p {
+  margin: 4px 0 0;
+  font-size: 1em;
+  font-weight: 500;
+}
+@media (max-width: 480px) {
   .header {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 30px;
+    flex-direction: column;
+    align-items: flex-start;
     padding: 20px;
   }
 
-  .header-content {
-    text-align: center;
+  .header-left {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
   }
 
   .profile-icon {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    object-fit: cover;
-    display: block;
-    cursor: pointer;
+    width: 80px;
+    height: 80px;
   }
 
-  /* ===== FORM STYLING ===== */
-  form {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  .header-text h1 {
+    font-size: 1.5em;
   }
 
-  input, textarea, button {
-    width: 100%;
-    padding: 10px;
-    margin-top: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 1em;
+  .header-text p {
+    font-size: 0.95em;
   }
+}
 
-  button {
-    background-color: #004aad;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-  }
+footer {
+  background: #004aad;
+  color: white;
+  text-align: center;
+  padding: 20px 10px;
+  margin-top: 40px;
+}
 
-  button:hover {
-    background-color: #003b80;
-  }
+footer p {
+  margin: 0;
+  font-size: 0.95em;
+}
 
-  /* ===== FOOTER ===== */
-  footer {
-    background: #004aad;
-    color: white;
-    text-align: center;
-    padding: 15px 0;
-    margin-top: 20px;
-  }
+.social-icons {
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
 
+.social-icons a img {
+  width: 36px;
+  height: 36px;
+  vertical-align: middle;
+  transition: transform 0.2s ease;
+}
+
+.social-icons a:hover img {
+  transform: scale(1.1);
+}
+
+@media (max-width: 480px) {
   .social-icons {
-    margin-top: 10px;
+    gap: 14px;
   }
 
-  .social-icons a {
-    color: white;
-    margin: 0 10px;
-    font-size: 1.8em;
+  .social-icons a img {
+    width: 32px;
+    height: 32px;
   }
-</style>
 
+  footer p {
+    font-size: 0.85em;
+  }
+}
 
+    /* ===== FORM STYLING ===== */
+    form {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
 
-<!-- Corrected Favicon using .jpg link -->
-<link rel="icon" type="image/jpeg" href="icon.jpg" />
+    input, textarea, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1em;
+    }
+
+    button {
+      background-color: #004aad;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #003b80;
+    }
+
+    /* ===== VISION LIST ===== */
+    #vision ul {
+      padding-left: 20px;
+    }
+
+    #vision li {
+      margin-bottom: 10px;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .header {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      nav {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      nav a {
+        margin: 6px 0;
+      }
+
+      iframe {
+        width: 100%;
+        height: 500px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      header h1 {
+        font-size: 2em;
+      }
+
+      .profile-icon {
+        width: 120px;
+        height: 120px;
+      }
+
+      iframe {
+        height: 400px;
+      }
+    }
+  </style>
 </head>
 <body>
 
-    <!-- ===== HEADER ===== -->
+  <!-- ===== HEADER ===== -->
 <header class="header">
-  <img src="profile.jpg" alt="Profile" class="profile-icon">
-  <div class="header-content">
-    <h1>Hamish Mead</h1>
-    <p>Candidate for Cairns Youth Council</p>
+  <div class="header-left">
+    <img src="profile.jpg" alt="Profile" class="profile-icon" />
+    <div class="header-text">
+      <h1>Hamish Mead</h1>
+      <p>Candidate for Cairns Youth Council</p>
+    </div>
   </div>
 </header>
-</a>
 
 
-    <!-- ===== NAVIGATION ===== -->
- <nav class="navbar">
-  <a href="#about" class="nav-btn">About Me</a>
-  <a href="#vision" class="nav-btn">My Vision</a>
-  <a href="#contact" class="nav-btn">Ask Me Anything</a>
-  <a href="updates.html" class="nav-btn">Updates</a>
-</nav>
+  <!-- ===== NAVIGATION ===== -->
+  <nav class="navbar">
+    <a href="#about" class="nav-btn">About Me</a>
+    <a href="#vision" class="nav-btn">My Vision</a>
+    <a href="#contact" class="nav-btn">Ask Me Anything</a>
+    <a href="updates.html" class="nav-btn">Updates</a>
+  </nav>
 
-<script>
+<!-- ===== ABOUT SECTION ===== -->
+<section id="about" class="card about-card">
+  <div class="about-content">
+    <img src="profile.jpg" alt="Hamish Profile" class="about-profile">
+    <div class="about-text">
+      <h2>About Me</h2>
+      <p>Hi! I'm Hamish Mead, a Year 9 student at Newman Catholic College. I'm passionate about making a real difference for young people in our community.</p>
+      <p>I'm running for Cairns Youth Council to advocate for better mental health support, inclusive events, and youth representation, not just today, but every day. Vote #1 for Hamish Mead!</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== MY VISION ===== -->
+<section id="vision">
+  <h2>My Vision</h2>
+  <div class="vision-grid">
+    <div class="vision-card mental">
+      <h3>Mental Health</h3>
+      <p>Raise awareness and support for youth mental health in Cairns. Everyone faces challenges, it's time we talk about it.</p>
+    </div>
+
+    <div class="vision-card academic">
+      <h3>Academic Support</h3>
+      <p>Help students struggling with schoolwork by promoting better resources and hands-on guidance in community spaces.</p>
+    </div>
+
+    <div class="vision-card events">
+      <h3>Youth Events</h3>
+      <p>Promote more free or low-cost events in the Northern Beaches that connect youth with community and promote mental wellness.</p>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+<!-- ===== CONTACT FORM ===== -->
+<section id="contact" class="card">
+  <h2>Ask Me Anything</h2>
+  <div class="form-container">
+    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSc6uHpckvXtB1iwIbuIH226aRNTKEPYzp2oPfq3S0uD6iYlHA/viewform?embedded=true" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+  </div>
+</section>
+
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <p>© 2025 Hamish Mead. All rights reserved</p>
+    <div style="text-align:center; padding: 20px;">
+      <a href="https://instagram.com/hamish.better" target="_blank" style="margin: 0 10px; text-decoration: none;">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram" width="40" height="40" style="vertical-align: middle;">
+      </a>
+      <a href="https://tiktok.com/@hamish.better" target="_blank" style="margin: 0 10px; text-decoration: none;">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a6/Tiktok_icon.svg" alt="Tiktok" width="40" height="40" style="vertical-align: middle;">
+      </a>
+    </div>
+  </footer>
+
+  <script>
 (() => {
   const STORAGE_KEY = "theme";
   const root = document.documentElement;
@@ -374,57 +847,5 @@ nav {
 })();
 </script>
 
-
-    <!-- ===== ABOUT SECTION ===== -->
-    <section id="about">
-        <h2>About Me</h2>
-        <p>Hello! My name is Hamish Mead, a Year 9 student at Newman Catholic College passionate about making a real difference for young people in our community. My aim is to create spaces where youth feel supported, heard, and where they can just be themseleves.</p>
-        <p>I’m running for the Cairns Youth Council because I want to advocate for better mental health support, more inclusive community events, and opportunities for every young voice to be heard, not just for today, but every day. Vote #1 for Hamish Mead!</p>
-    </section>
-
-    <!-- ===== VISION SECTION ===== -->
-    <section id="vision">
-        <h2>My Vision</h2>
-		<li>During the campaign period, I would like to raise awareness about youth mental health in Cairns. Everyone has their own issues that they struggle with everyday. Mental Health is an important thing in Cairns youth, and it is something we need to address.</li>
-		<li>Moreover, many youth struggle with their schoolwork, whether it is that they don't know how to do their work, or something else. I would like to try and raise awareness about this as well.</li>
-		<li>Something that the Northen beaches doesn't have is many youth events. Once I am elected, I would like to make some more free or low-cost events. These events will help improve youth mental health as well as strengthing the link between the Youth and Adults.</li>
-    </section>
-
-    <!-- ===== CONTACT FORM ===== -->
-    <section id="contact">
-        <h2>Ask Me Anything</h2>
-<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSc6uHpckvXtB1iwIbuIH226aRNTKEPYzp2oPfq3S0uD6iYlHA/viewform?embedded=true" width="800" height="600" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
-        </form>
-    </section>
-
-
-    <!-- ===== FOOTER ===== -->
-    <footer>
-        <p>© 2025 Hamish Mead. All rights reserved</p>
-<div style="text-align:center; padding: 20px;">
-  <!-- Instagram -->
-  <a href="https://instagram.com/hamish.better" target="_blank" style="margin: 0 10px; text-decoration: none;">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram" width="40" height="40" style="vertical-align: middle;">
-  </a>
-
-  <!-- Email -->
-  <a href= "https://tiktok.com/@hamish.better" target="_blank" style="margin: 0 10px; text-decoration: none;" >
-    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a6/Tiktok_icon.svg" alt="Tiktok" width="40" height="40" style="vertical-align: middle;">
-  </a>
-</div>
-    </footer>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
