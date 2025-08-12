@@ -16,11 +16,118 @@
 }
 
 .profile-icon {
-  width: 150px !important;
-  height: 150px !important;
+  width: 100px !important;
+  height: 100px !important;
   border-radius: 50%;
   object-fit: cover;
   display: block;
+}
+
+ /* ===== HEADER BLOCK ===== */
+.header {
+  background: linear-gradient(135deg, #004aad, #0088cc);
+  color: white;
+  padding: 20px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.profile-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.header-text h1 {
+  margin: 0;
+  font-size: 1.8em;
+}
+
+.header-text p {
+  margin: 4px 0 0;
+  font-size: 1em;
+  font-weight: 500;
+}
+@media (max-width: 480px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+  }
+
+  .header-left {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .profile-icon {
+    width: 80px;
+    height: 80px;
+  }
+
+  .header-text h1 {
+    font-size: 1.5em;
+  }
+
+  .header-text p {
+    font-size: 0.95em;
+  }
+}
+footer {
+  background: #004aad;
+  color: white;
+  text-align: center;
+  padding: 20px 10px;
+  margin-top: 40px;
+}
+
+footer p {
+  margin: 0;
+  font-size: 0.95em;
+}
+
+.social-icons {
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.social-icons a img {
+  width: 36px;
+  height: 36px;
+  vertical-align: middle;
+  transition: transform 0.2s ease;
+}
+
+.social-icons a:hover img {
+  transform: scale(1.1);
+}
+
+@media (max-width: 480px) {
+  .social-icons {
+    gap: 14px;
+  }
+
+  .social-icons a img {
+    width: 32px;
+    height: 32px;
+  }
+
+  footer p {
+    font-size: 0.85em;
+  }
 }
 
 .header-content {
@@ -90,11 +197,71 @@
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
+.update-card {
+  background: var(--card);
+  color: var(--text);
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  margin-top: 1rem;
+}
+.update-card {
+  background: var(--card);
+  color: var(--text);
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  margin-top: 1.5rem;
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+/* Hover effect for desktop */
+@media (hover: hover) {
+  .update-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+    z-index: 1;
+    position: relative;
+  }
+}
+
+/* Click effect for mobile */
+@media (hover: none) {
+  .update-card:active {
+    transform: scale(1.03);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+    z-index: 1;
+    position: relative;
+  }
+}
+
+.campaign-tracker {
+  background: transparent;
+  color: var(--text);
+}
+
+.timeline .event p {
+  color: var(--text);
+}
+
+.tooltip {
+  background: var(--text);
+  color: var(--bg);
+}
+
+.carousel-slide img {
+  border-radius: 8px;
+}
+
+.embed iframe {
+  background: var(--card);
+}
+
 
   /* ===== NAVIGATION ===== */
 nav {
   background: linear-gradient(135deg, #003b80, #0059b3); /* Gradient from deep to medium blue */
-  padding: 10px;
+  padding: 18px;
   text-align: center;
 }
 
@@ -154,12 +321,14 @@ nav {
 </head>
 <body>
 
-    <!-- ===== HEADER ===== -->
+  <!-- ===== HEADER ===== -->
 <header class="header">
-  <img src="profile.jpg" alt="Profile" class="profile-icon">
-  <div class="header-content">
-    <h1>Hamish Mead</h1>
-    <p>Candidate for Cairns Youth Council</p>
+  <div class="header-left">
+    <img src="profile.jpg" alt="Profile" class="profile-icon" />
+    <div class="header-text">
+      <h1>Hamish Mead</h1>
+      <p>Candidate for Cairns Youth Council</p>
+    </div>
   </div>
 </header>
 
@@ -473,7 +642,7 @@ nav {
     <div class="event" data-date="2025-08-18" data-tooltip="Campaign has officially started">
       <span class="dot"></span><p>18 August</p>
     </div>
-    <div class="event" data-date="2025-08-29" data-tooltip="Meet the candidates at the City Library">
+    <div class="event" data-date="2025-08-29" data-tooltip="Meet the candidates at Cairns Regional Council (Invite only)">
       <span class="dot"></span><p>29 Aug</p>
     </div>
     <div class="event" data-date="2025-09-07" data-tooltip="Final campaign day before voting">
@@ -796,8 +965,8 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 
             <div class="update-card">
-                <h3>Meet the Candidates forum</h3>
-                <p>Come meet the candidates at the Cairns City Libary on August 29th! Bring all your questions ready!</p>
+                <h3>Campaign start</h3>
+                <p>The campaign has started! Help me get elected by telling everyone to Vote #1 for Hamish!</p>
             </div>
         </section>
     </main>
