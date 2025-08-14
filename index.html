@@ -79,417 +79,405 @@
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
       background: linear-gradient(135deg, #6366f1, #60a5fa);
     }
-/* ===== CARD STYLING ===== */
-.card {
-  background: var(--card);
-  color: var(--text);
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-  padding: 20px;
-  margin: 20px auto;
-  max-width: 900px;
-  transition: background 180ms ease, color 180ms ease;
-}
 
-.card h2 {
-  margin-top: 0;
-  color: var(--text);
-  border-bottom: 2px solid var(--border);
-  padding-bottom: 5px;
-}
+    /* ===== CARD STYLING ===== */
+    .card {
+      background: var(--card);
+      color: var(--text);
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      padding: 20px;
+      margin: 20px auto;
+      max-width: 900px;
+      transition: background 180ms ease, color 180ms ease;
+    }
 
-.card ul {
-  padding-left: 20px;
-}
+    .card h2 {
+      margin-top: 0;
+      color: var(--text);
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 5px;
+    }
 
-.card li {
-  margin-bottom: 12px;
-  line-height: 1.5;
-}
+    .card ul {
+      padding-left: 20px;
+    }
 
-/* ===== ABOUT CARD PROFILE LAYOUT ===== */
-.about-card {
-  background: linear-gradient(to bottom, #1f2937, #0f172a); /* Dark gray to near-black */
-  color: white;
-  border-radius: 14px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  padding: 20px;
-  max-width: 900px;
-  margin: 40px auto 0 auto;
-  text-align: center;
-  transition: transform 200ms ease;
-}
+    .card li {
+      margin-bottom: 12px;
+      line-height: 1.5;
+    }
 
-.about-card h2 {
-  font-size: 1.4em;
-  margin-bottom: 10px;
-}
+    /* ===== ABOUT CARD PROFILE LAYOUT ===== */
+    /* switched to theme vars so it responds to light/dark */
+    .about-card {
+      background: var(--card);
+      color: var(--text);
+      border-radius: 14px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      padding: 20px;
+      max-width: 900px;
+      margin: 40px auto 0 auto;
+      text-align: center;
+      transition: transform 200ms ease, background 180ms ease, color 180ms ease;
+    }
 
-.about-card p {
-  font-size: 0.95em;
-  line-height: 1.6;
-  margin: 0 auto;
-  max-width: 800px;
-}
+    .about-card h2 {
+      font-size: 1.4em;
+      margin-bottom: 10px;
+    }
 
-/* Optional hover effect */
-.about-card:hover {
-  transform: scale(1.02);
-}
+    .about-card p {
+      font-size: 0.95em;
+      line-height: 1.6;
+      margin: 0 auto;
+      max-width: 800px;
+    }
 
-.about-content {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  flex-wrap: wrap;
-}
+    /* Optional hover effect */
+    .about-card:hover {
+      transform: scale(1.02);
+    }
 
-.about-profile {
-  width: 140px;
-  height: 140px;
-  border-radius: 50%;
-  object-fit: cover;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-}
+    .about-content {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
 
-.about-text {
-  flex: 1;
-  min-width: 200px;
-}
+    .about-profile {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
 
-/* ===== FORM CONTAINER ===== */
-.form-container {
-  overflow: hidden;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
+    .about-text {
+      flex: 1;
+      min-width: 200px;
+    }
 
-.form-container iframe {
-  width: 100%;
-  height: 600px;
-  border: none;
-}
+    /* ===== FORM CONTAINER ===== */
+    .form-container {
+      overflow: hidden;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
 
-/* ===== MOBILE RESPONSIVE ===== */
-@media (max-width: 768px) {
-  .card {
-    margin: 15px 10px;
-    padding: 16px;
-  }
+    .form-container iframe {
+      width: 100%;
+      height: 600px;
+      border: none;
+    }
 
-  .form-container iframe {
-    height: 500px;
-  }
+    /* ===== MOBILE RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .card {
+        margin: 15px 10px;
+        padding: 16px;
+      }
 
-  .about-content {
-    flex-direction: column;
-    text-align: center;
-  }
+      .form-container iframe {
+        height: 500px;
+      }
 
-  .about-profile {
-    margin-bottom: 12px;
-  }
-}
+      .about-content {
+        flex-direction: column;
+        text-align: center;
+      }
 
-@media (max-width: 480px) {
-  .card {
-    padding: 14px;
-  }
+      .about-profile {
+        margin-bottom: 12px;
+      }
+    }
 
-  .form-container iframe {
-    height: 420px;
-  }
+    @media (max-width: 480px) {
+      .card {
+        padding: 14px;
+      }
 
-  .card h2 {
-    font-size: 1.4em;
-  }
+      .form-container iframe {
+        height: 420px;
+      }
 
-  .card li {
-    font-size: 0.95em;
-  }
+      .card h2 {
+        font-size: 1.4em;
+      }
 
-  .about-profile {
-    width: 120px;
-    height: 120px;
-  }
-}
-/* ===== MY VISION SECTION ===== */
-#vision {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 20px;
-}
+      .card li {
+        font-size: 0.95em;
+      }
 
-#vision h2 {
-  text-align: center;
-  margin-bottom: 30px;
-  font-size: 1.8em;
-  color: var(--text);
-  border-bottom: 2px solid var(--border);
-  padding-bottom: 5px;
-}
+      .about-profile {
+        width: 120px;
+        height: 120px;
+      }
+    }
 
-/* === Card Grid === */
-.vision-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 20px;
-}
+    /* ===== MY VISION SECTION ===== */
+    #vision {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+    }
 
-.vision-card {
-  background: var(--card);
-  color: var(--text);
-  border-radius: 14px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-  padding: 20px;
-  transition: transform 200ms ease;
-}
+    #vision h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 1.8em;
+      color: var(--text);
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 5px;
+    }
 
-.vision-card:hover {
-  transform: scale(1.03);
-}
+    /* === Card Grid === */
+    .vision-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
 
-.vision-card h3 {
-  font-size: 1.3em;
-  margin-bottom: 10px;
-  color: var(--text);
-  text-align: center;
-}
+    .vision-card {
+      background: var(--card);
+      color: var(--text);
+      border-radius: 14px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      padding: 20px;
+      transition: transform 200ms ease;
+    }
 
-.vision-card p {
-  font-size: 0.95em;
-  line-height: 1.6;
-  text-align: left;
-  max-width: 360px;
-  margin: 0 auto;
-}
+    .vision-card:hover {
+      transform: scale(1.03);
+    }
 
-.vision-section {
-  margin: 3rem auto;
-  max-width: 1000px;
-  padding: 0 1rem;
-}
+    .vision-card h3 {
+      font-size: 1.3em;
+      margin-bottom: 10px;
+      color: var(--text);
+      text-align: center;
+    }
 
-.vision-section h2 {
-  font-size: 2rem;
-  text-align: center;
-  color: #004aad;
-  margin-bottom: 2rem;
-}
+    .vision-card p {
+      font-size: 0.95em;
+      line-height: 1.6;
+      text-align: left;
+      max-width: 360px;
+      margin: 0 auto;
+    }
 
-.vision-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 20px;
-}
+    .vision-section {
+      margin: 3rem auto;
+      max-width: 1000px;
+      padding: 0 1rem;
+    }
 
-.vision-card {
-  padding: 1.5rem;
-  border-radius: 12px;
-  color: white;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.12);
-  transition: transform 0.2s ease;
-}
+    .vision-section h2 {
+      font-size: 2rem;
+      text-align: center;
+      color: #004aad;
+      margin-bottom: 2rem;
+    }
 
-.vision-card:hover {
-  transform: translateY(-4px);
-}
+    .vision-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
 
-.vision-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 20px;
-}
+    .vision-card {
+      padding: 1.5rem;
+      border-radius: 12px;
+      color: white;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+      transition: transform 0.2s ease;
+    }
 
-.vision-card {
-  border-radius: 14px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-  padding: 20px;
-  transition: transform 200ms ease;
-  color: white;
-}
+    .vision-card:hover {
+      transform: translateY(-4px);
+    }
 
-.vision-card h3 {
-  font-size: 1.3em;
-  margin-bottom: 10px;
-  text-align: center;
-}
+    .vision-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
 
-.vision-card p {
-  font-size: 0.95em;
-  line-height: 1.6;
-  text-align: left;
-  max-width: 360px;
-  margin: 0 auto;
-}
+    .vision-card {
+      border-radius: 14px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      padding: 20px;
+      transition: transform 200ms ease;
+      color: white;
+    }
 
-/* Base card: keep your existing padding, shadow, etc. */
-.vision-card {
-  position: relative;
-  border-radius: 14px;
-  border: 5px solid transparent;             /* real border area */
-  background: var(--card-bg) padding-box;     /* inner background only */
-  background-clip: padding-box, border-box;   /* enable 2-layer clip */
-  transition: transform 200ms ease;
-}
+    .vision-card h3 {
+      font-size: 1.3em;
+      margin-bottom: 10px;
+      text-align: center;
+    }
 
-/* Hover: add animated gradient layer ONLY to the border area */
-.vision-card:hover {
-  background:
-    var(--card-bg) padding-box,                                        /* inner bg (unchanged) */
-    linear-gradient(270deg, var(--border-c1), var(--border-c2), var(--border-c1)) border-box; /* border layer */
-  background-size: auto, 300% 300%;
-  background-position: 0 0, 0% 50%;
-  animation: visionBorderShift 5s linear infinite;                     /* animate the border layer */
-  transform: scale(1.03);
-}
+    .vision-card p {
+      font-size: 0.95em;
+      line-height: 1.6;
+      text-align: left;
+      max-width: 360px;
+      margin: 0 auto;
+    }
 
-/* Keyframes animate only the second (border) layer’s position */
-@keyframes visionBorderShift {
-  0%   { background-position: 0 0,   0% 50%; }
-  50%  { background-position: 0 0, 100% 50%; }
-  100% { background-position: 0 0,   0% 50%; }
-}
+    /* Base card: keep your existing padding, shadow, etc. */
+    .vision-card {
+      position: relative;
+      border-radius: 14px;
+      border: 5px solid transparent;             /* real border area */
+      background: var(--card-bg) padding-box;     /* inner background only */
+      background-clip: padding-box, border-box;   /* enable 2-layer clip */
+      transition: transform 200ms ease;
+    }
 
-/* Per-card themes (keeps your top-to-bottom gradients) */
-.vision-card.mental {
-  --card-bg: linear-gradient(to bottom, #3b82f6, #1e40af);
-  --border-c1: #60a5fa; --border-c2: #3C787E;
-}
+    /* Hover: add animated gradient layer ONLY to the border area */
+    .vision-card:hover {
+      background:
+        var(--card-bg) padding-box,                                        /* inner bg (unchanged) */
+        linear-gradient(270deg, var(--border-c1), var(--border-c2), var(--border-c1)) border-box; /* border layer */
+      background-size: auto, 300% 300%;
+      background-position: 0 0, 0% 50%;
+      animation: visionBorderShift 5s linear infinite;                     /* animate the border layer */
+      transform: scale(1.03);
+    }
 
-.vision-card.academic {
-  --card-bg: linear-gradient(to bottom, #10b981, #065f46);
-  --border-c1: #34d399; --border-c2: #3E2F5B;
-}
+    /* Keyframes animate only the second (border) layer’s position */
+    @keyframes visionBorderShift {
+      0%   { background-position: 0 0,   0% 50%; }
+      50%  { background-position: 0 0, 100% 50%; }
+      100% { background-position: 0 0,   0% 50%; }
+    }
 
-.vision-card.events {
-  --card-bg: linear-gradient(to bottom, #f59e0b, #b45309);
-  --border-c1: #fbbf24; --border-c2: #247B7B;
-}
+    /* Per-card themes (keeps your top-to-bottom gradients) */
+    .vision-card.mental {
+      --card-bg: linear-gradient(to bottom, #3b82f6, #1e40af);
+      --border-c1: #60a5fa; --border-c2: #3C787E;
+    }
 
-/* Force About Me text to white */
-.about-card,
-.about-card h2,
-.about-card p,
-.about-card a,
-.about-card li,
-.about-card h3,
-.about-card h4,
-.about-card h5,
-.about-card h6 {
-  color: #fff;
-}
-.about-card h2 {
-  border-bottom-color: rgba(255, 255, 255, 0.6);
-}
+    .vision-card.academic {
+      --card-bg: linear-gradient(to bottom, #10b981, #065f46);
+      --border-c1: #34d399; --border-c2: #3E2F5B;
+    }
+
+    .vision-card.events {
+      --card-bg: linear-gradient(to bottom, #f59e0b, #b45309);
+      --border-c1: #fbbf24; --border-c2: #247B7B;
+    }
 
     /* ===== HEADER BLOCK ===== */
-.header {
-  background: linear-gradient(135deg, #004aad, #0088cc);
-  color: white;
-  padding: 20px 30px;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-}
+    .header {
+      background: linear-gradient(135deg, #004aad, #0088cc);
+      color: white;
+      padding: 20px 30px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
 
-.header-left {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
 
-.profile-icon {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  object-fit: cover;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-}
+    .profile-icon {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
 
-.header-text h1 {
-  margin: 0;
-  font-size: 1.8em;
-}
+    .header-text h1 {
+      margin: 0;
+      font-size: 1.8em;
+    }
 
-.header-text p {
-  margin: 4px 0 0;
-  font-size: 1em;
-  font-weight: 500;
-}
-@media (max-width: 480px) {
-  .header {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 20px;
-  }
+    .header-text p {
+      margin: 4px 0 0;
+      font-size: 1em;
+      font-weight: 500;
+    }
 
-  .header-left {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
-  }
+    @media (max-width: 480px) {
+      .header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 20px;
+      }
 
-  .profile-icon {
-    width: 80px;
-    height: 80px;
-  }
+      .header-left {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
 
-  .header-text h1 {
-    font-size: 1.5em;
-  }
+      .profile-icon {
+        width: 80px;
+        height: 80px;
+      }
 
-  .header-text p {
-    font-size: 0.95em;
-  }
-}
+      .header-text h1 {
+        font-size: 1.5em;
+      }
 
-footer {
-  background: #004aad;
-  color: white;
-  text-align: center;
-  padding: 20px 10px;
-  margin-top: 40px;
-}
+      .header-text p {
+        font-size: 0.95em;
+      }
+    }
 
-footer p {
-  margin: 0;
-  font-size: 0.95em;
-}
+    footer {
+      background: #004aad;
+      color: white;
+      text-align: center;
+      padding: 20px 10px;
+      margin-top: 40px;
+    }
 
-.social-icons {
-  margin-top: 15px;
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  flex-wrap: wrap;
-}
+    footer p {
+      margin: 0;
+      font-size: 0.95em;
+    }
 
-.social-icons a img {
-  width: 36px;
-  height: 36px;
-  vertical-align: middle;
-  transition: transform 0.2s ease;
-}
+    .social-icons {
+      margin-top: 15px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
 
-.social-icons a:hover img {
-  transform: scale(1.1);
-}
+    .social-icons a img {
+      width: 36px;
+      height: 36px;
+      vertical-align: middle;
+      transition: transform 0.2s ease;
+    }
 
-@media (max-width: 480px) {
-  .social-icons {
-    gap: 14px;
-  }
+    .social-icons a:hover img {
+      transform: scale(1.1);
+    }
 
-  .social-icons a img {
-    width: 32px;
-    height: 32px;
-  }
+    @media (max-width: 480px) {
+      .social-icons {
+        gap: 14px;
+      }
 
-  footer p {
-    font-size: 0.85em;
-  }
-}
+      .social-icons a img {
+        width: 32px;
+        height: 32px;
+      }
+
+      footer p {
+        font-size: 0.85em;
+      }
+    }
 
     /* ===== FORM STYLING ===== */
     form {
@@ -570,16 +558,15 @@ footer p {
 <body>
 
   <!-- ===== HEADER ===== -->
-<header class="header">
-  <div class="header-left">
-    <img src="profile.jpg" alt="Profile" class="profile-icon" />
-    <div class="header-text">
-      <h1>Hamish Mead</h1>
-      <p>Candidate for Cairns Youth Council</p>
+  <header class="header">
+    <div class="header-left">
+      <img src="profile.jpg" alt="Profile" class="profile-icon" />
+      <div class="header-text">
+        <h1>Hamish Mead</h1>
+        <p>Candidate for Cairns Youth Council</p>
+      </div>
     </div>
-  </div>
-</header>
-
+  </header>
 
   <!-- ===== NAVIGATION ===== -->
   <nav class="navbar">
@@ -589,51 +576,46 @@ footer p {
     <a href="updates.html" class="nav-btn">Updates</a>
   </nav>
 
-<!-- ===== ABOUT SECTION ===== -->
-<section id="about" class="card about-card">
-  <div class="about-content">
-    <img src="profile.jpg" alt="Hamish Profile" class="about-profile">
-    <div class="about-text">
-      <h2>About Me</h2>
-      <p>Hi! I'm Hamish Mead, a Year 9 student at Newman Catholic College. I'm passionate about making a real difference for young people in our community.</p>
-      <p>I'm running for Cairns Youth Council to advocate for better mental health support, inclusive events, and youth representation, not just today, but every day. Vote #1 for Hamish Mead!</p>
+  <!-- ===== ABOUT SECTION ===== -->
+  <section id="about" class="card about-card">
+    <div class="about-content">
+      <img src="profile.jpg" alt="Hamish Profile" class="about-profile">
+      <div class="about-text">
+        <h2>About Me</h2>
+        <p>Hi! I'm Hamish Mead, a Year 9 student at Newman Catholic College. I'm passionate about making a real difference for young people in our community.</p>
+        <p>I'm running for Cairns Youth Council to advocate for better mental health support, inclusive events, and youth representation, not just today, but every day. Vote #1 for Hamish Mead!</p>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ===== MY VISION ===== -->
-<section id="vision">
-  <h2>My Vision</h2>
-  <div class="vision-grid">
-    <div class="vision-card mental">
-      <h3>Mental Health</h3>
-      <p>Raise awareness and support for youth mental health in Cairns. Everyone faces challenges, it's time we talk about it.</p>
+  <!-- ===== MY VISION ===== -->
+  <section id="vision">
+    <h2>My Vision</h2>
+    <div class="vision-grid">
+      <div class="vision-card mental">
+        <h3>Mental Health</h3>
+        <p>Raise awareness and support for youth mental health in Cairns. Everyone faces challenges, it's time we talk about it.</p>
+      </div>
+
+      <div class="vision-card academic">
+        <h3>Academic Support</h3>
+        <p>Help students struggling with schoolwork by promoting better resources and hands-on guidance in community spaces.</p>
+      </div>
+
+      <div class="vision-card events">
+        <h3>Youth Events</h3>
+        <p>Promote more free or low-cost events in the Northern Beaches that connect youth with community and promote mental wellness.</p>
+      </div>
     </div>
+  </section>
 
-    <div class="vision-card academic">
-      <h3>Academic Support</h3>
-      <p>Help students struggling with schoolwork by promoting better resources and hands-on guidance in community spaces.</p>
+  <!-- ===== CONTACT FORM ===== -->
+  <section id="contact" class="card">
+    <h2>Ask Me Anything</h2>
+    <div class="form-container">
+      <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSc6uHpckvXtB1iwIbuIH226aRNTKEPYzp2oPfq3S0uD6iYlHA/viewform?embedded=true" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
     </div>
-
-    <div class="vision-card events">
-      <h3>Youth Events</h3>
-      <p>Promote more free or low-cost events in the Northern Beaches that connect youth with community and promote mental wellness.</p>
-    </div>
-  </div>
-</section>
-
-
-
-
-
-<!-- ===== CONTACT FORM ===== -->
-<section id="contact" class="card">
-  <h2>Ask Me Anything</h2>
-  <div class="form-container">
-    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSc6uHpckvXtB1iwIbuIH226aRNTKEPYzp2oPfq3S0uD6iYlHA/viewform?embedded=true" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
-  </div>
-</section>
-
+  </section>
 
   <!-- ===== FOOTER ===== -->
   <footer>
