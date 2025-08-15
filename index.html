@@ -828,8 +828,46 @@
   } catch {}
 })();
 </script>
+<!-- SECRET PAGE -->
+<section id="secret-page" style="display:none; background-color: var(--bg-color); color: var(--text-color); position:fixed; top:0; left:0; width:100%; height:100%; z-index:9999; overflow:auto; text-align:center; padding:50px; transition: background-color 0.3s, color 0.3s;">
+    <h1>🎉 You found the secret page! 🎉</h1>
+    <p>This is your hidden area. Put whatever you want here.</p>
+    <img src="https://via.placeholder.com/200" alt="Secret Image" style="border-radius:50%; margin-top:20px;">
+    <br><br>
+    <button onclick="closeSecretPage()" style="padding:10px 20px; cursor:pointer; border:none; border-radius:8px; background-color: var(--accent-color); color: #fff;">Go Back</button>
+</section>
+
+<script>
+let clickCount = 0;
+let clickTimer;
+
+document.querySelector('#profile-pic').addEventListener('click', () => {
+    clickCount++;
+    clearTimeout(clickTimer);
+    clickTimer = setTimeout(() => clickCount = 0, 1000); // Reset if no rapid clicks
+    if (clickCount >= 5) {
+        openSecretPage();
+        clickCount = 0;
+    }
+});
+
+function openSecretPage() {
+    document.querySelector('header').style.display = 'none';
+    document.querySelector('footer').style.display = 'none';
+    document.querySelector('main').style.display = 'none';
+    document.querySelector('#secret-page').style.display = 'block';
+}
+
+function closeSecretPage() {
+    document.querySelector('header').style.display = 'block';
+    document.querySelector('footer').style.display = 'block';
+    document.querySelector('main').style.display = 'block';
+    document.querySelector('#secret-page').style.display = 'none';
+}
+</script>
 
 </body>
 </html>
+
 
 
