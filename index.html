@@ -582,7 +582,7 @@
       <img src="profile.jpg" alt="Hamish Profile" class="about-profile">
       <div class="about-text">
         <h2>About Me</h2>
-        <p>Hi! I'm Hamish Mead, a Year 9 student at Newman Catholic College. I'm passionate about making a real difference for young people in our community.</p>
+        <p>Hi! I'm Hamish Mead, a Year 9 student. I'm passionate about making a real difference for young people in our community.</p>
         <p>I'm running for Cairns Youth Council to advocate for better mental health support, inclusive events, and youth representation, not just today, but every day. Vote #1 for Hamish Mead!</p>
       </div>
     </div>
@@ -613,7 +613,7 @@
   <section id="contact" class="card">
     <h2>Ask Me Anything</h2>
     <div class="form-container">
-      <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSc6uHpckvXtB1iwIbuIH226aRNTKEPYzp2oPfq3S0uD6iYlHA/viewform?embedded=true" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+      <p>Sorry you can't ask me questions here! I know, not ideal, but you can go to https://www.fya.org.au/people/hamish-mead/ to ask me questions!</p>
     </div>
   </section>
 
@@ -621,12 +621,12 @@
   <footer>
     <p>© 2025 Hamish Mead. All rights reserved</p>
     <div style="text-align:center; padding: 20px;">
-      <a href="https://instagram.com/hamish.better" target="_blank" style="margin: 0 10px; text-decoration: none;">
+      <a href="https://instagram.com/Cairns_ym" target="_blank" style="margin: 0 10px; text-decoration: none;">
         <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram" width="40" height="40" style="vertical-align: middle;">
       </a>
-      <a href="https://tiktok.com/@hamish.better" target="_blank" style="margin: 0 10px; text-decoration: none;">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a6/Tiktok_icon.svg" alt="Tiktok" width="40" height="40" style="vertical-align: middle;">
-      </a>
+     <a href="mailto:young.mayors.qld@fya.org.au?subject=Candidate:%20Hamish%20Mead" target="_blank" style="margin: 0 10px; text-decoration: none;">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg" alt="Email" width="40" height="40" style="vertical-align: middle;">
+</a>
     </div>
   </footer>
 
@@ -828,46 +828,9 @@
   } catch {}
 })();
 </script>
-<!-- SECRET PAGE -->
-<section id="secret-page" style="display:none; background-color: var(--bg-color); color: var(--text-color); position:fixed; top:0; left:0; width:100%; height:100%; z-index:9999; overflow:auto; text-align:center; padding:50px; transition: background-color 0.3s, color 0.3s;">
-    <h1>🎉 You found the secret page! 🎉</h1>
-    <p>This is your hidden area. Put whatever you want here.</p>
-    <img src="https://via.placeholder.com/200" alt="Secret Image" style="border-radius:50%; margin-top:20px;">
-    <br><br>
-    <button onclick="closeSecretPage()" style="padding:10px 20px; cursor:pointer; border:none; border-radius:8px; background-color: var(--accent-color); color: #fff;">Go Back</button>
-</section>
-
-<script>
-let clickCount = 0;
-let clickTimer;
-
-document.querySelector('#profile-pic').addEventListener('click', () => {
-    clickCount++;
-    clearTimeout(clickTimer);
-    clickTimer = setTimeout(() => clickCount = 0, 1000); // Reset if no rapid clicks
-    if (clickCount >= 5) {
-        openSecretPage();
-        clickCount = 0;
-    }
-});
-
-function openSecretPage() {
-    document.querySelector('header').style.display = 'none';
-    document.querySelector('footer').style.display = 'none';
-    document.querySelector('main').style.display = 'none';
-    document.querySelector('#secret-page').style.display = 'block';
-}
-
-function closeSecretPage() {
-    document.querySelector('header').style.display = 'block';
-    document.querySelector('footer').style.display = 'block';
-    document.querySelector('main').style.display = 'block';
-    document.querySelector('#secret-page').style.display = 'none';
-}
-</script>
-
 </body>
 </html>
+
 
 
 
